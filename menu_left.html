@@ -242,10 +242,9 @@
 <!------------------------> 
 <!--  USER MENU       -->
 <!------------------------>
-
 <li class="searchmenu">
 
-    <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">User {{users}} </span><span class="fa arrow"></span></a>
+    <a href="#"><i class="fa fa-user"></i> <span class="nav-label">User {{users}} </span><span class="fa arrow"></span></a>
 
     <ul class="nav nav-second-level collapse">
 
@@ -257,8 +256,16 @@
 
 </li>
 
-{% endif %}
+<!------------------------> 
+<!--  Logout            -->
+<!------------------------>
+<li  class="active2 menugrande">
+    <a href="#" style="color: #d4494e;"><i class="fa fa-sign-out"></i> <span class="nav-label">{{langene.BTN_LOGOUT}}</span></a>
+</li>
 
+<!------------------------> 
+<!--  Disk Usage        -->
+<!------------------------>
 <li  class="active2 menugrande">
     <a href="#" ><i class="fa fa-tasks"></i> <span class="nav-label">{{langene.USERDD}}</span></a>
 </li>
