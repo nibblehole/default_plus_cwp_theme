@@ -1,0 +1,296 @@
+<div class="row  border-bottom white-bg dashboard-header">
+    {% if mod.fsl == 1 %}
+    {% set stflalert ='block' %}
+    {% else %}
+    {% set stflalert ='none' %}
+    {% endif %}
+    <div class="row  alert alert-warning col-lg-12" style="margin-left: 5px; padding-right: 5px;display:{{stflalert}}" id="alertfl">
+        <strong>{{langene.GALARTFILEBLOCK}}</strong>
+    </div>
+    <div class="col-lg-10">
+        <h2>{{langmod.BCTITLE}} ({{users}})</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="?">Home</a></li>
+            <li class="breadcrumb-item active"><strong>{{langmod.BCTITLE}}</strong></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <br>
+        <div class="row">
+            <div class="col-lg-9">
+                <div>
+                    <div class="ibox-title">
+                        <div class="tabs-container">
+                            <ul class="nav nav-tabs">
+                                <li class="active"  id="tab1link"><a data-toggle="tab" href="#tab-1" aria-expanded="true"> {{langmod.BDTAB1}}</a></li>
+                                <!--li class="" id="tab2link"><a data-toggle="tab" href="#tab-2" aria-expanded="false" >{{langmod.BDTAB2}}</a></li-->
+                            </ul>
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <button type="button" id="btn-generatenow" class="btn btn-success btn-xs mr5 mb10">{{langmod.BCLABEL1}}</button>
+                                            </div>
+                                            <div class="col-lg-offset-1 col-sm-8">
+                                                <div class="input-group m-b"><span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary btn-xs" style="margin-right: 5px">{{langmod.DBNOTIFI}}</button> </span> <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p>{{langmod.BCDESC}}</p>
+                                        <div class="col-lg-12">
+                                            <div class="ibox">
+                                                <div class="ibox-title">
+                                                    <h5>{{langmod.DBBACKAV}}</h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    {% set cont=1 %}
+                                                    {% for backup in mod.backup %}
+                                                    <div id="tar{{cont}}">
+                                                        <div class="row" style="padding-top: 5px">
+                                                            <div class="col-lg-6">
+                                                                <i class="fa fa-download"></i>  <a href="ftp://{{users}}@{{pma.0}}:21/backupcwp/{{backup.file}}" target="_blank">{{backup.file}} </a>
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                                ({{backup.size}} MB)
+                                                            </div>
+                                                            <div class="col-lg-3" id="btndole{{cont}}">
+                                                                <!--button type="button" class="btn btn-success btn-xs mr5 mb10" onclick="return restoreback(0,'{{backup.file}}','{{cont}}')">{{langmod.DBRESTBTN}}</button-->
+                                                                <button type="button" class="btn btn-danger btn-xs mr5 mb10" onclick="return deletetar(0,'{{backup.file}}','{{cont}}')">{{langmod.DBDELETE}}</button>
+                                                            </div>
+                                                            <div class="col-lg-3" id="btnacition{{cont}}" style="display: none">
+                                                                <button type="button" class="btn btn-primary btn-xs mr5 mb10" id="btn-restorenow{{cont}}" onclick="return restoreback(1,'{{backup.file}}','{{cont}}')"><i class="fa fa-asterisk"></i> {{langmod.BCLABEL17}}</button>
+                                                                <button type="button" class="btn btn-danger btn-xs mr5 mb10" id="btn-restorecancel{{cont}}" onclick="return restoreback(2,'{{backup.file}}','{{cont}}')">{{langmod.DBCANCEL}}</button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    {% set cont=cont+1 %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="ibox">
+                                                <div class="ibox-title">
+                                                    <h5>{{langmod.BDRESPPA}}</h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    <div style="padding-top: 5px">
+                                                        <button type="button" class="btn btn-primary btn-xs mr5 mb10" id="btn-homedir" onclick="return ajaxcreatebackup('','homedir','btn-homedir')">{{langmod.BCHOMEDIR}}</button>  {{langmod.BDBTC1DESC}}
+                                                    </div>
+                                                    <div style="padding-top: 5px">
+                                                        <button type="button" class="btn btn-primary btn-xs mr5 mb10"  id="btn-mysql" onclick="return ajaxcreatebackup('','mysql','btn-mysql')">{{langmod.BDALLDB}}</button>  {{langmod.BDDATABASEDESC}}
+                                                    </div>
+                                                    <div style="padding-top: 5px">
+                                                        <button type="button" class="btn btn-primary btn-xs mr5 mb10"  id="btn-mail" onclick="return ajaxcreatebackup('','mail','btn-mail')">{{langmod.DBALLEMAIL}}</button>  {{langmod.BDALLEMAILBA}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="ibox">
+                                                <div class="ibox-title">
+                                                    <h5>{{langmod.DBONLYMYSQL}}</h5>
+                                                </div>
+                                                    <div class="ibox-content">
+                                                        {% set cel = 0 %}
+                                                        {% for mysql in mod.mysql %}
+                                                            {% if cel == 0  %}
+                                                                <div class="row" style="padding-top: 15px">
+                                                            {% endif  %}
+                                                                <div class="col-lg-2"><i class="fa fa-download"></i> <a href="ftp://{{users}}@{{pma.0}}:21/backupcwp/mysql/dump_{{mysql.database}}.sql" target="_blank">{{mysql.database}}</a></div>
+                                                            {% set cel = cel +1  %}
+                                                            {% if  cel == 6  %}
+                                                                {% set cel = 0  %}
+                                                                </div>
+                                                            {% endif  %}
+                                                        {% endfor %}
+                                                        {% if  cel < 6 and  cel > 0 %}
+                                                            </div>
+                                                        {% endif  %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div id="tab-2" class="tab-pane">
+                                    <div class="panel-body">
+                                        {% if mod.stbackup > 0 %}
+                                        <div class="row col-lg-12">
+                                            <div class="radio-custom radio-inline">
+                                                <input type="radio" name="radio1" value="2"  id="radio6" checked onclick="return typerestore(1)">
+                                                <label for="radio6">{{langmod.BCLABEL2}}</label>
+                                            </div>
+                                            <div class="radio-custom radio-inline">
+                                                <input type="radio" name="radio1" value="1" id="radio4"  onclick="return typerestore(0)">
+                                                <label for="radio4">{{langmod.BCLABEL3}}</label>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                        <br>
+                                        <div style="margin-top: 25px; display: block" id="backupfile">
+                                            <div class="row">
+                                                <div class="col-lg-8">
+                                                    <form id="uploadtargz" action="" method="post" enctype="multipart/form-data">
+                                                        <b>{{langmod.DBRESTOREHD}}</b>
+                                                        <div class="custom-file">
+                                                            <input id="restor_file" name="restor_file" type="file" class="custom-file-input">
+                                                            <label for="restor_file" class="custom-file-label">Choose file...</label>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="col-lg-2" style="margin-top: 15px">
+                                                    <button type="submit" id="btn_rest_file" name="btn_rest_file" class="btn btn-primary btn-xs mr5 mb10" style="display: none">{{langmod.DBRESTBTN}}</button>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="margin-top: 50px">
+                                                <div class="col-lg-8">
+                                                    <form id="uploadsql" action="" method="post" enctype="multipart/form-data">
+                                                        <b>{{langmod.DBMYSQLREST}}</b>
+                                                        <div class="custom-file">
+                                                            <input id="restore_sql" name="restore_sql" type="file" class="custom-file-input">
+                                                            <label for="restore_sql" class="custom-file-label">Choose file...</label>
+                                                        </div>
+                                                        <div id="message2"></div>
+                                                    </form>
+                                                </div>
+                                                <div class="col-lg-2" style="margin-top: 15px">
+                                                    <!--button type="button" class="btn btn-primary btn-xs mr5 mb10">{{langmod.DBRESTBTN}}</button-->
+                                                    <button type="submit" id="btn_rest_sql" name="btn_rest_sql" class="btn btn-primary btn-xs mr5 mb10" style="display: none">{{langmod.DBRESTBTN}}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div style="margin-top: 15px; display: none; margin-top: 15px" id="serverbackup">
+                                            <div class="row">
+                                                <div  class="col-lg-3" style="margin-top: -5px"><strong>{{langmod.BACKFROMBACK}}:</strong></div>
+                                                <div id="restselect" class="col-lg-4" style="margin-top: -25px"></div>
+                                            </div>
+                                            <div class="row">
+                                                <div  class="col-lg-2"   style="margin-top: 25px;margin-bottom: 15px"><strong>{{langmod.BACKReCOVER}}:</strong></div>
+                                                <div id="restradio" class="col-lg-10"   style="margin-top: 25px;margin-bottom: 15px"></div>
+                                            </div>
+                                            <div class="row"  style=" display: none" id="errorbackup">
+                                            </div>
+                                            <div class="row"  style=" display: none" id="alertbackup">
+                                            </div>
+                                            <div class="row"  style="display: none" id="alertbackup2">
+                                            </div>
+                                        </div>
+                                        <div class="row col-lg-12">
+                                            <div  class="col-lg-offset-10 col-lg-2"><button class="btn btn-success btn-xs"  id="btnretoreuser" style="display: none">{{langmod.BTNRESTORE}}</button> </div>
+                                        </div>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox-content">
+                    <div class="row ">
+                        <div class="col-lg-12">
+                            <div class="flot-chart">
+                                <div class="flot-chart-pie-content" id="flot-pie-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel-body">
+                                <div class="panel-group" id="accordion">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h5 class="panel-title">
+                                                {{langmod.BCTITLE}}
+                                            </h5>
+                                        </div>
+                                        <div id="collapseOne" class="panel-collapse in collapse show" style="">
+                                            <div class="panel-body">
+                                                {{langmod.DBTITLETAB}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default" style="margin-top: 25px">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                {{langmod.BCRESTOREST}}
+                                            </h4>
+                                        </div>
+                                        <div id="collapseTwo" class="panel-collapse in collapse show">
+                                            <div class="panel-body">
+                                                {{langmod.BCRESTOREST2}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<input type="hidden" id="hiddenvalue">
+<!-- Modal -->
+<div id="myModaldetail" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">{{langmod.BCLABEL20}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-12" style="margin-bottom: 15px">
+                    <div class="row">
+                        <div class="checkbox-custom checkbox-inline">
+                            <input type="checkbox" value="home" id="homeuser2" onclick="return valiarbackuser(0)"><label for="homeuser">Home</label>
+                        </div>
+                        <div class="checkbox-custom checkbox-inline">
+                            <input type="checkbox" value="mysql" id="mysqluser2" onclick="return valiarbackuser(1)"><label for="mysqluser">Mysql / MariaDB</label>
+                        </div>
+                        <div class="checkbox-custom checkbox-inline">
+                            <input type="checkbox" value="mail" id="mailuser2" onclick="return valiarbackuser(2)"><label for="mailuser">Mail / Alias</label>
+                        </div>
+                        <div class="checkbox-custom checkbox-inline">
+                            <input type="checkbox" value="ftp" id="ftpaccounts2" onclick="return valiarbackuser(3)"><label for="ftpaccounts">Accounts FTP</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="checkbox-custom checkbox-inline">
+                            <input type="checkbox" value="named" id="nameds2" onclick="return valiarbackuser(4)"><label for="nameds">DNS records</label>
+                        </div>
+                        <div class="checkbox-custom checkbox-inline">
+                            <input type="checkbox" value="passaccount" id="passaccount" onclick="return valiarbackuser(5)"><label for="passaccount">Account password</label>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+            <div class="modal-footer">
+                <!--button type="button" class="btn btn-success" onclick="return restoreback(3,'','')">{{langmod.BCLABEL19}}</button-->
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{langmod.DBCANCEL}}</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+    <div class="wrapper wrapper-content" style="margin-top: 35px">
+        {% include 'footer.html' %}
+    </div>
+</div>

@@ -1,0 +1,85 @@
+<div class="row  border-bottom white-bg dashboard-header">
+    {% if mod.fsl == 1 %}
+    {% set stflalert ='block' %}
+    {% else %}
+    {% set stflalert ='none' %}
+    {% endif %}
+    <div class="row  alert alert-warning col-lg-12" style="margin-left: 5px; padding-right: 5px;display:{{stflalert}}" id="alertfl">
+        <strong>{{langene.GALARTFILEBLOCK}}</strong>
+    </div>
+    <div class="col-lg-10">
+        <h2>{{langmod.MRTITLE1}} ({{users}})</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="?">Home</a></li>
+            <li class="breadcrumb-item active"><strong>{{langmod.MRTITLE1}}</strong></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-9">
+        <br>
+        <div class="ibox-title">
+            <br>
+            <div class="panel-body">
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: auto;">
+                    <div class="table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th class="per5">
+                                    #
+                                </th>
+                                <th class="per40">{{langmod.MRDOMAINS}}</th>
+                                <th class="per40">{{langmod.MRMAILCHANGE}}</th>
+                                <th class="per15">{{langmod.MRACTION}}</th>
+                            </tr>
+                            </thead>
+                            <tbody id="listtr">
+                            {% if mod.emailr|length>0 %}
+                            {% set barprog =1 %}
+                            {% for emailr in mod.emailr %}
+
+                            <tr>
+                                <td>
+                                    {{barprog}}
+                                </td>
+                                <td>{{emailr.domain}}</td>
+                                {% if emailr.active ==1 %}
+                                <td><i class="fa fa-map-marker"></i>  {{langmod.MRLABEL1}}</td>
+                                {% else %}
+                                <td><i class="fa fa-globe"></i>  {{langmod.MRLABEL2}}</td>
+                                {% endif %}
+                                <td>
+                                    <button type="button" class="btn btn-warning btn-xs mr5 mb10 btnchangest" onclick="return changest('{{emailr.domain}}','{{emailr.active}}')">{{langmod.MRBTNCHANGE}}</button>
+                                    <button type="button" class="btn btn-default btn-xs mr5 mb10 btnstatusdomiain" onclick="return statusdomiain('{{emailr.domain}}')">{{langmod.MRBTNSTATUS}}</button>
+                                </td>
+                            </tr>
+                            {% set barprog = barprog+1 %}
+                            {% endfor %}
+                            {% endif %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="slimScrollBar ui-draggable" style="background: rgb(243, 243, 243); height: 5px; position: absolute; bottom: 3px; opacity: 0.4; display: none; border-radius: 5px; z-index: 99; width: 635px; left: 0px;"></div>
+                    <div class="slimScrollRail" style="width: 100%; height: 5px; position: absolute; bottom: 3px; display: none; border-radius: 5px; background: rgb(51, 51, 51); opacity: 0.3; z-index: 90;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <br>
+        <div class="ibox-content">
+
+            <div class="jumbotron">
+                <p>{{langmod.MRTITLE2}}</p>
+                <p>{{langmod.MRTITLE3}}</p>
+                </p>
+            </div>
+
+        </div>
+    </div>
+    <div class="wrapper wrapper-content" style="margin-top: 35px">
+        {% include 'footer.html' %}
+    </div>
+</div>

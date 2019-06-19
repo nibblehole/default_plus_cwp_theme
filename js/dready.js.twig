@@ -1,0 +1,255 @@
+    var table;
+    {% if mod.name =='phpini_editor' %}
+        $('.typeahead_3').typeahead({
+            source: [
+                {"name": "Africa/Abidjan"},{"name": "Africa/Algiers"},{"name": "Africa/Bangui"},{"name": "Africa/Blantyre"}, {"name": "Africa/Cairo"},
+                {"name": "Africa/Conakry"},{"name": "Africa/Djibouti"},{"name": "Africa/Freetown"},{"name": "Africa/Johannesburg"}, {"name": "Africa/Khartoum"},
+                {"name": "Africa/Lagos"},{"name": "Africa/Luanda"},{"name": "Africa/Malabo"},{"name": "Africa/Mbabane"}, {"name": "Africa/Nairobi"},
+                {"name": "Africa/Nouakchott"},{"name": "Africa/Sao_Tome"},{"name": "Africa/Windhoek"},{"name": "Africa/Accra"}, {"name": "Africa/Asmara"},
+                {"name": "Africa/Banjul"},{"name": "America/Araguaina"},{"name": "Antarctica/Davis"},{"name": "Antarctica/Rothera"}, {"name": "Antarctica/Vostok"},
+                {"name": "Africa/Brazzaville"},{"name": "America/Asuncion"},{"name": "Antarctica/Mawson"},{"name": "Antarctica/DumontDUrville"}, {"name": "Antarctica/McMurdo"},
+                {"name": "Africa/Casablanca"},{"name": "America/Bahia_Banderas"},{"name": "Arctic/Longyearbyen"},{"name": "Asia/Aden"}, {"name": "Asia/Almaty"},
+                {"name": "Africa/Dakar"},{"name": "America/Belize"},{"name": "Asia/Anadyr"},{"name": "Asia/Aqtau"}, {"name": "Asia/Baghdad"},
+                {"name": "Africa/Douala"},{"name": "America/Bogota"},{"name": "Asia/Aqtobe"},{"name": "Asia/Ashgabat"}, {"name": "Asia/Atyrau"},
+                {"name": "Africa/Gaborone"},{"name": "America/Campo_Grande"},{"name": "Asia/Bahrain"},{"name": "Asia/Baku"}, {"name": "Asia/Bangkok"},
+                {"name": "Africa/Juba"},{"name": "America/Cayenne"},{"name": "Asia/Barnaul"},{"name": "Asia/Beirut"}, {"name": "Asia/Bishkek"},
+                {"name": "Africa/Kigali"},{"name": "America/Chihuahua"},{"name": "Asia/Brunei"},{"name": "Asia/Chita"}, {"name": "Asia/Choibalsan"},
+                {"name": "Africa/Libreville"},{"name": "America/Cuiaba"},{"name": "Asia/Colombo"},{"name": "Asia/Damascus"}, {"name": "Asia/Dhaka"},
+                {"name": "Africa/Lubumbashi"},{"name": "America/Dawson"},{"name": "Asia/Dili"},{"name": "Asia/Dubai"}, {"name": "Asia/Dushanbe"},
+                {"name": "Africa/Maputo"},{"name": "Antarctica/Syowa"},{"name": "Asia/Famagusta"},{"name": "Asia/Gaza"}, {"name": "Asia/Hebron"},
+                {"name": "Africa/Mogadishu"},{"name": "America/Detroit"},{"name": "Asia/Ho_Chi_Minh"},{"name": "Asia/Hong_Kong"}, {"name": "Asia/Hovd"},
+                {"name": "Africa/Ndjamena"},{"name": "America/Eirunepe"},{"name": "Asia/Ho_Chi_Minh"},{"name": "Asia/Hong_Kong"}, {"name": "Asia/Hovd"},
+                {"name": "Africa/Ouagadougou"},{"name": "America/Fortaleza"},{"name": "Asia/Irkutsk"},{"name": "Asia/Jakarta"}, {"name": "Asia/Jayapura"},
+                {"name": "Africa/Tripoli"},{"name": "America/Goose_Bay"},{"name": "Asia/Jerusalem"},{"name": "Asia/Kabul"}, {"name": "Asia/Kabul"},
+                {"name": "Africa/Addis_Ababa"},{"name": "America/Guadeloupe"},{"name": "Atlantic/Azores"},{"name": "Atlantic/Bermuda"}, {"name": "Atlantic/Canary"},
+                {"name": "Africa/Bamako"},{"name": "America/Guyana"},{"name": "Atlantic/Cape_Verde"},{"name": "Atlantic/Faroe"}, {"name": "Atlantic/Madeira"},
+                {"name": "Africa/Bissau"},{"name": "America/Hermosillo"},{"name": "Arctic/Longyearbyen"},{"name": "Atlantic/South_Georgia"}, {"name": "Atlantic/St_Helena"},
+                {"name": "Africa/Bujumbura"},{"name": "America/Iqaluit"},{"name": "Atlantic/Stanley"},{"name": "Australia/Adelaide"}, {"name": "Australia/Currie"},
+                {"name": "Africa/Ceuta"},{"name": "America/Kralendijk"},{"name": "Australia/Hobart"},{"name": "Australia/Melbourne"}, {"name": "Australia/Brisbane"},
+                {"name": "Africa/Dar_es_Salaam"},{"name": "America/Los_Angeles"},{"name": "Australia/Darwin"},{"name": "Australia/Lindeman"}, {"name": "Australia/Sydney"},
+                {"name": "Africa/El_Aaiun"},{"name": "America/Managua"},{"name": "Australia/Perth"},{"name": "Australia/Lord_Howe"}, {"name": "Australia/Eucla"},
+                {"name": "Africa/Harare"},{"name": "America/Martinique"},{"name": "Australia/Broken_Hill"},{"name": "Europe/Amsterdam"}, {"name": "Europe/Andorra"},
+                {"name": "Africa/Kampala"},{"name": "America/Menominee"},{"name": "Europe/Athens"},{"name": "Europe/Belgrade"}, {"name": "Europe/Bratislava"},
+                {"name": "Africa/Kinshasa"},{"name": "America/Mexico_City"},{"name": "Europe/Berlin"},{"name": "Europe/Brussels"}, {"name": "Europe/Bucharest"},
+                {"name": "Africa/Lome"},{"name": "America/Monterrey"},{"name": "Europe/Budapest"},{"name": "Europe/Busingen"}, {"name": "Europe/Chisinau"},
+                {"name": "Africa/Lusaka"},{"name": "America/Nassau"},{"name": "Europe/Copenhagen"},{"name": "Europe/Dublin"}, {"name": "Europe/Gibraltar"},
+                {"name": "Africa/Maseru"},{"name": "America/Nome"},{"name": "Europe/Guernsey"},{"name": "Europe/Helsinki"}, {"name": "Europe/Isle_of_Man"},
+                {"name": "Africa/Monrovia"},{"name": "America/Anguilla"},{"name": "Europe/Istanbul"},{"name": "Europe/Jersey"}, {"name": "Europe/Kaliningrad"},
+                {"name": "Africa/Niamey"},{"name": "America/Argentina"},{"name": "Europe/Istanbul"},{"name": "Europe/Jersey"}, {"name": "Europe/Kaliningrad"},
+                {"name": "Africa/Porto-Novo"},{"name": "America/Atikokan"},{"name": "Europe/Kiev"},{"name": "Europe/Kirov"}, {"name": "Europe/Lisbon"},
+                {"name": "Africa/Tunis"},{"name": "America/Barbados"},{"name": "Europe/Ljubljana"},{"name": "Europe/London"}, {"name": "Europe/Luxembourg"},
+                {"name": "America/Adak"},{"name": "America/Blanc-Sablon"},{"name": "Europe/Madrid"},{"name": "Europe/Malta"}, {"name": "Europe/Mariehamn"},
+                {"name": "America/Antigua"},{"name": "America/Boise"},{"name": "Europe/Minsk"},{"name": "Europe/Monaco"}, {"name": "Europe/Moscow"},
+                {"name": "America/Aruba"},{"name": "America/Cancun"},{"name": "Europe/Oslo"},{"name": "Europe/Paris"}, {"name": "Europe/Podgorica"},
+                {"name": "America/Bahia"},{"name": "America/Cayman"},{"name": "Europe/Prague"},{"name": "Europe/Riga"}, {"name": "Europe/Rome"},
+                {"name": "America/Belem"},{"name": "America/Costa_Rica"},{"name": "Europe/Samara"},{"name": "Europe/San_Marino"}, {"name": "Europe/Sarajevo"},
+                {"name": "America/Boa_Vista"},{"name": "America/Curacao"},{"name": "Europe/Saratov"},{"name": "Europe/Simferopol"}, {"name": "Europe/Skopje"},
+                {"name": "America/Cambridge_Bay"},{"name": "America/Dawson_Creek"},{"name": "Europe/Sofia"},{"name": "Europe/Stockholm"}, {"name": "Europe/Tallinn"},
+                {"name": "America/Caracas"},{"name": "America/Dominica"},{"name": "Europe/Tirane"},{"name": "Europe/Ulyanovsk"}, {"name": "Europe/Uzhgorod"},
+                {"name": "America/Chicago"},{"name": "America/El_Salvador"},{"name": "Europe/Vaduz"},{"name": "Europe/Vatican"}, {"name": "Europe/Vienna"},
+                {"name": "America/Creston"},{"name": "America/Glace_Bay"},{"name": "Europe/Vaduz"},{"name": "Europe/Vatican"}, {"name": "Europe/Vienna"},
+                {"name": "America/Danmarkshavn"},{"name": "America/Grand_Turk"},{"name": "Europe/Vilnius"},{"name": "Europe/Volgograd"}, {"name": "Europe/Warsaw"},
+                {"name": "America/Denver"},{"name": "America/Guatemala"},{"name": "Europe/Zagreb"},{"name": "Europe/Zaporozhye"}, {"name": "Europe/Zurich"},
+                {"name": "America/Edmonton"},{"name": "America/Halifax"},{"name": "Indian/Antananarivo"},{"name": "Indian/Chagos"}, {"name": "Indian/Christmas"},
+                {"name": "America/Fort_Nelson"},{"name": "America/Indiana/Knox"},{"name": "Indian/Cocos"},{"name": "Indian/Comoro"}, {"name": "Indian/Kerguelen"},
+                {"name": "America/Godthab"},{"name": "America/Jamaica"},{"name": "Indian/Mahe"},{"name": "Indian/Maldives"}, {"name": "Indian/Mauritius"},
+                {"name": "America/Grenada"},{"name": "America/La_Paz"},{"name": "Indian/Mayotte"},{"name": "Indian/Reunion"}, {"name": "Pacific/Apia"},
+                {"name": "America/Guayaquil"},{"name": "America/Lower_Princes"},{"name": "Pacific/Chatham"},{"name": "Pacific/Efate"}, {"name": "Pacific/Fiji"},
+                {"name": "America/Havana"},{"name": "America/Manaus"},{"name": "Pacific/Gambier"},{"name": "Pacific/Honolulu"}, {"name": "Pacific/Kwajalein"},
+                {"name": "America/Inuvik"},{"name": "America/Matamoros"},{"name": "Pacific/Midway"},{"name": "Pacific/Norfolk"}, {"name": "Pacific/Palau"},
+                {"name": "America/Juneau"},{"name": "America/Merida"},{"name": "Pacific/Port_Moresby"},{"name": "Pacific/Tahiti"}, {"name": "Pacific/Wake"},
+                {"name": "America/Lima"},{"name": "America/Miquelon"},{"name": "Africa/Asmera"},{"name": "America/Atka"}, {"name": "America/Coral_Harbour"},
+                {"name": "America/Maceio"},{"name": "America/Montevideo"},{"name": "America/Fort_Wayne"},{"name": "America/Knox_IN"}, {"name": "America/Montreal"},
+                {"name": "America/Marigot"},{"name": "America/New_York"},{"name": "America/Santa_Isabel"},{"name": "Antarctica/South_Pole"}, {"name": "Asia/Chongqing"},
+                {"name": "America/Mazatlan"},{"name": "America/Noronha"},{"name": "Pacific/Galapagos"},{"name": "Asia/Harbin"}, {"name": "Asia/Katmandu"},
+                {"name": "America/Metlakatla"},{"name": "Antarctica/Casey"},{"name": "Asia/Macao"},{"name": "Asia/Istanbul"}, {"name": "America/Buenos_Aires"},
+                {"name": "America/Moncton"},{"name": "Antarctica/Macquarie"},{"name": "America/Cordoba"},{"name": "America/Indianapolis"}, {"name": "America/Argentina"},
+                {"name": "America/Montserrat"},{"name": "Antarctica/Palmer"},{"name": "America/Catamarca"},{"name": "America/Ensenada"}, {"name": "Asia/Calcutta"},
+                {"name": "America/Nipigon"},{"name": "Antarctica/Troll"},{"name": "Asia/Dacca"},{"name": "Asia/Rangoon"}, {"name": "Asia/Kashgar"},
+                {"name": "America/Anchorage"}
+            ]
+        });
+        var editor_one = CodeMirror.fromTextArea(document.getElementById("code1"), {
+            lineNumbers: true,
+            matchBrackets: true,
+            styleActiveLine: true,
+            theme:"ambiance"
+        });
+
+        editor_one.on('change',function(cMirror){
+            code1hiden.value = cMirror.getValue();
+        });
+        //validatetypephp();
+    {% endif %}
+    {% if mod.name =='phpselector' %}
+        changesttypephp('{{mod.php}}');
+        changephp();
+    {% endif %}
+
+
+    {% if mod.name =='mysql_manager' %}
+        var table = $('.dataTables-example').DataTable({
+            pageLength: {{ confi.LISTROW }},
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [
+
+            ]
+        });
+    {% endif %}
+
+    {% if mod.name =='ftp_accounts' %}
+        var table = $('.dataTables-example').DataTable({
+            pageLength: {{ confi.LISTROW }},
+            responsive: true,
+            dom: '<"html5buttons"B>frltip',
+            buttons: [
+
+            ]
+        });
+    {% endif %}
+
+    {% if mod.name =='mail_autoreply' %}
+        var table = $('.dataTables-example').DataTable({
+            pageLength: {{ confi.LISTROW }},
+            responsive: true,
+            dom: '<"html5buttons"B>frltip',
+            buttons: [
+
+            ]
+        });
+        $('#start_date').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+        $('#data_2 .input-group.date').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+
+        $('.clockpicker').clockpicker();
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green'
+        });
+    {% endif %}
+
+    {% if mod.name =='domains' %}
+        var table = $('.dataTables-example').DataTable({
+        pageLength: {{ confi.LISTROW }},
+        responsive: true,
+        dom: '<"html5buttons"B>frltip',
+        buttons: [
+
+        ]
+    });
+    {% endif %}
+
+    {% if mod.name =='subdomains' %}
+        var table = $('.dataTables-example').DataTable({
+            pageLength: {{ confi.LISTROW }},
+            responsive: true,
+            dom: '<"html5buttons"B>frltip',
+            buttons: [
+
+            ]
+        });
+    {% endif %}
+
+    {% if mod.name =='email_accounts' %}
+        var table = $('.dataTables-example').DataTable({
+        pageLength: {{ confi.LISTROW }},
+        responsive: true,
+        dom: '<"html5buttons"B>frltip',
+        buttons: [
+
+        ]
+    });
+    {% endif %}
+
+    {% if mod.name =='backups' %}
+    {% set porhome=(100/mod.packquota)*mod.packquotaused %}
+    {% set pormysql=(100/mod.packquota)*mod.sizemysql %}
+    {% set pormail=(100/mod.packquota)*mod.sizemail %}
+        var data = [{
+            label: "Home",
+            data: {{ porhome }},
+            color: "#d3d3d3",
+        }, {
+            label: "MySql",
+            data: {{ pormysql }},
+            color: "#bababa",
+        }, {
+            label: "Email",
+            data: {{ pormail }},
+            color: "#1ab394",
+        }];
+        var plotObj = $.plot($("#flot-pie-chart"), data, {
+            series: {
+                pie: {
+                    show: true
+                }
+            },
+            grid: {
+                hoverable: true
+            },
+            tooltip: true,
+            tooltipOpts: {
+                content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
+                shifts: {
+                    x: 20,
+                    y: 0
+                },
+                defaultTheme: false
+            }
+        });
+        $('.custom-file-input').on('change', function() {
+            let fileName = $(this).val().split('\\').pop();
+            $(this).next('.custom-file-label').addClass("selected").html(fileName);
+        });
+    {% endif %}
+
+    {% if mod.name =='crontab' %}
+        track_errors();
+    {% endif %}
+
+    $("#top-search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        if(value != ''){
+            $('.searchmenu').addClass('active');
+            $('.searchmenu ul').addClass('in');
+            $('.searchmenu ul').css('height','auto');
+            $("div.float-e-margins").show();
+            //$('.ibox-content').css('display','block');
+        }else{
+            $('.searchmenu').removeClass('active');
+            $('.searchmenu ul').removeClass('in');
+            $('.searchmenu ul').css('height','0px');
+            $("div.float-e-margins").show();
+        }
+        $("#side-menu li.searchmenu, #side-menu li.search").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+        $("div.ibox-content div a").filter(function() {
+            $(this).parent().toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+        $("div.float-e-margins div.ibox-content").each(function(){
+            var bandera=0;
+            $(this).find(".col-md-3").each(function(){
+                //console.log($(this).text());
+                if(!$(this).is(':hidden') && $(this).text()!=''){
+                    bandera=1;
+                }
+            });
+            //console.log(bandera);
+            if(bandera==0){
+                $(this).parent().hide();
+            }
+        });
+    });

@@ -1,0 +1,166 @@
+<div class="row  border-bottom white-bg dashboard-header">
+    {% if mod.fsl == 1 %}
+    {% set stflalert ='block' %}
+    {% else %}
+    {% set stflalert ='none' %}
+    {% endif %}
+    <div class="row  alert alert-warning col-lg-12" style="margin-left: 5px; padding-right: 5px;display:{{stflalert}}" id="alertfl">
+        <strong>{{langene.GALARTFILEBLOCK}}</strong>
+    </div>
+    <div class="col-lg-10">
+        <h2>{{langmod.TITLEFTP}} ({{users}})</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="?">Home</a></li>
+            <li class="breadcrumb-item active"><strong>{{langmod.TITLEFTP}}</strong></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <br>
+        <div class="row">
+            <div class="col-lg-9">
+                <div>
+                    <div class="ibox-title">
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <h4>{{langmod.FTPLABEL1}}</h4>
+                            </div>
+                            {% if (mod.ftp_accounts < mod.ftp_pack) or (mod.ftp_pack==0) %}
+                                <div class="col-lg-2 text-right">
+                                    <button type="button" id="btn_add_ftp" class="btn btn-success btn-xs mr5 mb10"> {{langmod.ADDFTPACCOUNT}}</button>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-12 ibox-content">
+                        <div class="table-responsive">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                                <table class="table table-striped table-bordered table-hover dataTables-example dataTable" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" role="grid">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="per5">#</th>
+                                            <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">{{langmod.FTPDOMAINS}}</th>
+                                            <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">{{langmod.FTPUSER}}</th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">{{langmod.PATH}}</th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">{{langmod.ACTION}}</th>
+                                        </tr>
+                                </thead>
+                                 <tbody id="contftp">
+                                    <tr>
+                                        <td>
+                                            <a href="#"><i class="fa fa-info-circle" onclick="return settingmanual('{{users}}','{{mod.ftp_domain}}')"></i> </a>
+                                        </td>
+                                        <td class="sorting_1">{{mod.ftp_domain}}</td>
+                                        <td class="sorting_1">{{users}}</td>
+                                        <td>/home/{{users}}/</td>
+                                        <td></td>
+                                    </tr>
+                                    {% for ftp in mod.ftp_account %}
+                                    <tr class="gradeA even" role="row">
+                                        <td><a href="#"><i class="fa fa-info-circle" onclick="return settingmanual('{{ftp.domain}}','{{mod.ftp_domain}}')"></i> </a></td>
+                                        <td class="sorting_1">{{mod.ftp_domain}}</td>
+                                        <td class="center">{{ftp.domain}}</td>
+                                        <td class="center">{{ftp.path}}</td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-primary btn-xs mr5 mb10" onclick="return changepassftp('{{ftp.domain}}')">{{langmod.FTPCHNAGEPASS}}</button> <button type="button" class="btn btn-danger btn-xs mr5 mb10" onclick="return ftpdelete(0,'{{ftp.domain}}','{{mod.ftp_domain}}',0)">{{langmod.FTPDELETEONLY}}</button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% set ftpbar=100/mod.ftp_pack*mod.ftp_accounts %}
+            <div class="col-lg-3">
+                <div class="ibox-content" id="indftp">
+                    <ul class="stat-list">
+                        <li>
+                            <h2 class="no-margins" style="vertical-align: inherit;" id="tlftpind">{{langene.PGFTP}} {{mod.ftp_accounts}} / {{mod.ftp_pack}}</h2>
+                            <small style="vertical-align: inherit;">{{langmod.FTPLABEL4}} / {{langmod.FTPLABEL5}}</small>
+                            <div class="stat-percent">{{ftpbar|round}}%</div>
+                            <div class="progress progress-mini">
+                                {% if ftpbar >=26 and ftpbar <=50 %}
+                                    {% set classbar = 'progress-bar progress-bar-success' %}
+                                {% elseif ftpbar >=51 and ftpbar <=75 %}
+                                    {% set classbar = 'progress-bar progress-bar-warning' %}
+                                {% elseif ftpbar >75 %}
+                                    {% set classbar = 'progress-bar progress-bar-danger' %}
+                                {% else %}
+                                    {% set classbar = 'progress-bar' %}
+                                {% endif %}
+                                <div style="width: {{ftpbar|round(1, 'floor')}}%;" class="{{classbar}}" id="barftpind"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div style="margin-top: 15px">
+                    <div class="ibox-title">
+                        <h4>
+                            {{langmod.FTPMANUALSETTING}}
+                        </h4>
+                    </div>
+                    <div class="col-md-12 ibox-content">
+                        <div class="panel-body">
+                            <p><b>FTP Username:</b> <samp id="userftp"></samp></p>
+                            <p><b>FTP Server:</b> <samp id="serverftp"></samp> / (IP: {{mod.ftp_server}})</p>
+                            <p><b>FTP Server Port:</b> 21</p>
+                            <!--p><b>SFTP Server Port:</b> 22</p-->
+                            <br>
+                            <p align="center" style="font-size: x-small">{{langmod.FTPIMGCONF}} <a href=""><i class="fa fa-info-circle"></i></a>  {{langmod.FTPIMGCONF2}}</p>
+                        </div>
+                    </div>
+                </div>
+                <!--div style="margin-top: 15px">
+                    <div class="ibox-title">
+                        <h4>
+                            Last access
+                        </h4>
+                    </div>
+                    <div class="col-md-12 ibox-content">
+                        <ul class="list-group clear-list m-t">
+                            {% for ftparray in mod.ftplast %}
+                                <li class="list-group-item fist-item">
+                                <span class="pull-right">
+                                    {{ftparray.hour}}
+                                </span>
+                                    <span class="label label-success">{{ftparray.ip}}</span>   <span style="padding-left: 45px">{{ftparray.date}}</span>
+                                </li>
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+                </div-->
+                <div style="margin-top: 15px">
+                    <div class="ibox-title">
+                        <h4>
+                            {{langmod.FTPCONFIGCLIENT}} {{users}}
+                        </h4>
+                    </div>
+                    <div class="col-md-12 ibox-content">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <p align="center"><a href="https://filezilla-project.org/" target="_blank"><img src="https://forum.filezilla-project.org/styles/AllanStyle-SUBSILVER/theme/images/fzlogo.png" width="50" height="50" border="0"></a></p>
+                                <p align="center" style="margin-bottom: -2px"><a id="aftpfilezilla" href="?module=ftp_accounts&acc=xmlfilezilla&client=filezilla"><i class="icomoon-icon-download"></i> {{langmod.FTPLABELFTP}}</a></p>
+                            </div>
+                            <div class="col-sm-4">
+                                <p align="center"><a href="https://panic.com/transmit/" target="_blank"><img src="https://panic.com/images/icon-transmit.png" width="55" height="50" border="0"></a></p>
+                                <p align="center"  style="margin-bottom: -2px"><a id="aftptransmit" href="?module=ftp_accounts&acc=xmlfilezilla&client=transmit"><i class="icomoon-icon-download"></i> {{langmod.FTPLABELFTP}}</a></p>
+                            </div>
+                            <div class="col-sm-4">
+                                <p align="center"><a href="https://cyberduck.io/" target="_blank"><img src="https://media.cyberduck.io/img/cyberduck-icon-384.png" width="50" height="50" border="0"></a></p>
+                                <p align="center" style="margin-bottom: -2px"><a id="aftpcyberduck" href="?module=ftp_accounts&acc=xmlfilezilla&client=cyberduck"><i class="icomoon-icon-download"></i> {{langmod.FTPLABELFTP}}</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content" style="margin-top: 35px">
+        {% include 'footer.html' %}
+    </div>
+</div>

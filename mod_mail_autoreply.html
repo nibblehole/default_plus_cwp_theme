@@ -1,0 +1,132 @@
+{% set emailbar_mailauto=100/mod.email_pack_mailauto*mod.email_accounts_mailauto %}
+<div class="row  border-bottom white-bg dashboard-header">
+    {% if mod.fsl == 1 %}
+    {% set stflalert ='block' %}
+    {% else %}
+    {% set stflalert ='none' %}
+    {% endif %}
+    <div class="row  alert alert-warning col-lg-12" style="margin-left: 5px; padding-right: 5px;display:{{stflalert}}" id="alertfl">
+        <strong>{{langene.GALARTFILEBLOCK}}</strong>
+    </div>
+    <div class="col-lg-10">
+        <h2>{{langmod.ARTITJLE}} ({{users}})</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="?">Home</a></li>
+            <li class="breadcrumb-item active"><strong>{{langmod.ARTITJLE}}</strong></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <br>
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="ibox-title">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <h4>{{langmod.ARTITJLE}}</h4>
+                        </div>
+                        {% if mod.email_accounts_mailauto < mod.email_pack_mailauto %}
+                        <div class="col-lg-2 text-right" id="divbtnadd">
+                            <button type="button" id="btn-addautof" class="btn btn-success btn-xs mr5 mb10">{{langmod.ARBTNADD}}</button>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-12 ibox-content">
+                    <div class="panel-body">
+                        <div class="col-sm-12">
+                            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: auto;">
+                                <div class="table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                                        <table class="table table-striped table-bordered table-hover dataTables-example dataTable no-footer" id="DataTables_Table_0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{langmod.AREMAIL}}</th>
+                                                    <th>{{langmod.ARSUBJECT}}</th>
+                                                    <th>{{langmod.ARDOMAIN}}</th>
+                                                    <th>{{langmod.ARACTIVATION}}</th>
+                                                    <th>{{langmod.ARACTION}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="contenttr">
+                                            {% set cont =1 %}
+                                            {% for autoresp in mod.autoresp %}
+                                                <tr id="tremail{{cont}}">
+                                                    <td>{{autoresp.email}} </td>
+                                                    <td align="center" id="sj{{cont}}">{{autoresp.subject}}</td>
+                                                    <td align="center">{{autoresp.domain}}</td>
+                                                    <td align="center">
+                                                        {% if autoresp.send_date_range==1 %}
+                                                        <b>{{langmod.ARFROM}}</b>: {{autoresp.start_date}}<p><b>{{langmod.ARTO}}</b>: {{autoresp.end_date}}</p>
+                                                        {% else %}
+                                                        <p></p>
+                                                        <p>- - -</p>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td align="center">
+                                                        <div class="row  text-center">
+                                                            <div class="col-lg-5">
+                                                                {% if autoresp.active==1 %}
+                                                                    <button type="button" class="btn btn-primary btn-xs mr5 mb10" onclick="return autofchangest('{{autoresp.email}}','{{cont}}')" id="btnautofchang{{cont}}"><i class="fa fa-thumbs-o-up"></i>  {{langmod.AULABEL4}}</button>
+                                                                {% elseif autoresp.active==5 %}
+                                                                    <button type="button" class="btn btn-warning btn-xs mr5 mb10" onclick="return autofchangest('{{autoresp.email}}','{{cont}}')" id="btnautofchang{{cont}}"><i class="fa fa-thumbs-o-down"></i>  {{langmod.ARDESACTIVE}}</button>
+                                                                {% else %}
+                                                                    <button type="button" class="btn btn-primary btn-xs mr5 mb10" onclick="return autofchangest('{{autoresp.email}}','{{cont}}')" id="btnautofchang{{cont}}"><i class="fa fa-thumbs-o-down"></i>  {{langmod.ARDESACTIVE}}</button>
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                                <button type="button" class="btn btn-success btn-xs mr5 mb10" onclick="return autofedit('{{autoresp.email}}','{{cont}}')"><i class="fa fa-pencil-square-o"></i>  {{langmod.AREDIT}}</button>
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                                <button type="button" class="btn btn-danger btn-xs mr5 mb10" onclick="return autofdelete(0,'{{autoresp.email}}','{{cont}}')"><i class="fa fa-trash"></i>  {{langmod.ARDELETE}}</button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            {% set cont =cont+1 %}
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="slimScrollBar ui-draggable" style="background: rgb(243, 243, 243); height: 5px; position: absolute; bottom: 3px; opacity: 0.4; display: none; border-radius: 5px; z-index: 99; width: 826px;"></div>
+                                <div class="slimScrollRail" style="width: 100%; height: 5px; position: absolute; bottom: 3px; display: none; border-radius: 5px; background: rgb(51, 51, 51); opacity: 0.3; z-index: 90;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="col-md-12 ibox-content">
+                    <div class="panel-body">
+                        <div class="ibox-content" id="indemail" style="display: block">
+                            <ul class="stat-list">
+                                <li>
+                                    <h2 class="no-margins" style="vertical-align: inherit;" id="tlftpind">{{langmod.EARESPONDER}} {{mod.email_accounts_mailauto}} / {{mod.email_pack_mailauto}}</h2>
+                                    <small style="vertical-align: inherit;">{{langmod.AULABEL1}} / {{langmod.AULABEL2}}</small>
+                                    <div class="stat-percent">{{emailbar_mailauto|round}}%</div>
+                                    <div class="progress progress-mini">
+                                        {% if emailbar_mailauto >=26 and emailbar_mailauto <=50 %}
+                                        {% set classbar = 'progress-bar progress-bar-success' %}
+                                        {% elseif emailbar_mailauto >=51 and emailbar_mailauto <=75 %}
+                                        {% set classbar = 'progress-bar progress-bar-warning' %}
+                                        {% elseif emailbar_mailauto >75 %}
+                                        {% set classbar = 'progress-bar progress-bar-danger' %}
+                                        {% else %}
+                                        {% set classbar = 'progress-bar' %}
+                                        {% endif %}
+                                        <div style="width: {{emailbar_mailauto|round(1, 'floor')}}%;" class="{{classbar}}" id="baremailind"></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content" style="margin-top: 35px">
+        {% include 'footer.html' %}
+    </div>
+</div>

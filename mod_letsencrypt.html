@@ -1,0 +1,107 @@
+<div class="row  border-bottom white-bg dashboard-header">
+    {% if mod.fsl == 1 %}
+    {% set stflalert ='block' %}
+    {% else %}
+    {% set stflalert ='none' %}
+    {% endif %}
+    <div class="row  alert alert-warning col-lg-12" style="margin-left: 5px; padding-right: 5px;display:{{stflalert}}" id="alertfl">
+        <strong>{{langene.GALARTFILEBLOCK}}</strong>
+    </div>
+    <div class="col-lg-10">
+        <h2>{{langmod.LMTITLE}} ({{users}})</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="?">Home</a></li>
+            <li class="breadcrumb-item active"><strong>{{langmod.LMTITLE}}</strong></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <br>
+        <div class="row">
+            <div class="col-lg-8">
+                <div>
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5>{{langmod.LMTITLE2}}</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-sm">
+                                    {{langmod.LMSUBTITLE}}
+                                </div>
+                                <div class="col-sm  col-lg-6">
+                                    <select class="form-control" id="domain_lets" onchange="return validatevhost()">
+                                        <option value="">{{langmod.LMCHOOSE}}</option>
+                                        {% for domains in mod.domains %}
+                                        <option value="{{domains.path}}||{{domains.domain}}">{{domains.domain}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-sm text-left">
+                                    <button class="btn btn-success btn-sm disabled" id="btn-lets-add" style="width: 150px" disabled>{{langmod.LMINSTALL}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-lg-12 text-right">
+                                    <button id="forceallrenew" class="btn btn-xs btn-warning">{{langmod.SSLBTNFORCE}}</button>
+                                </div>
+                                <div class="col-lg-12 text-left">
+                                    <table class="table table-striped" st>
+                                        <thead>
+                                        <tr>
+                                            <th>{{langmod.LMDOMAIN}}</th>
+                                            <th>{{langmod.LMPATH}}</th>
+                                            <th>{{langmod.LMEXP}}</th>
+                                            <!--th>{{langmod.LMIP}} / {{langmod.LMPORT}}</th-->
+                                            <th>{{langmod.LMACTION}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="sslbody">
+
+                                        {{ mod.tablessl|raw}}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="col-lg-4">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="jumbotron">
+                                <h3 class="list-group-item"><b>{{langmod.LMDESC2}}</b></h3>
+                                <small class="list-group-item-text">{{langmod.LMDESC3}}</small>
+                                <small class="list-group-item-text">{{langmod.LMDESC4}}</small>
+                                <br>
+                                <br>
+                                <p style="font-size: 14px">{{langmod.LMDESC5}}</p>
+                                <p style="font-size: 14px">{{langmod.LMDESC6}}</p>
+                                <p style="font-size: 14px">{{langmod.LMDESC7}}</p>
+                                <p style="font-size: 14px">{{langmod.LMDESC8}}</p>
+                                <p style="font-size: 14px">{{langmod.LMDESC9}}</p>
+                                <br><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content" style="margin-top: 35px">
+        {% include 'footer.html' %}
+    </div>
+</div>

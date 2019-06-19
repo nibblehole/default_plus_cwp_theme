@@ -1,0 +1,92 @@
+<div class="row  border-bottom white-bg dashboard-header">
+    {% if mod.fsl == 1 %}
+    {% set stflalert ='block' %}
+    {% else %}
+    {% set stflalert ='none' %}
+    {% endif %}
+    <div class="row  alert alert-warning col-lg-12" style="margin-left: 5px; padding-right: 5px;display:{{stflalert}}" id="alertfl">
+        <strong>{{langene.GALARTFILEBLOCK}}</strong>
+    </div>
+    <div class="col-lg-10">
+        <h2>{{langmod.NAMEMOD}}  ({{users}})</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="?">Home</a></li>
+            <li class="breadcrumb-item active"><strong>{{langmod.NAMEMOD}}</strong></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-9">
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="col-lg-3">Domain: </div>
+                    <div class="col-lg-9">
+                        {% if mod.domain|length > 1 %}
+                            <select class="form-control" id="domainphp">
+                                {% for domains in mod.domain %}
+                                    <option value="{{domains}}">{{domains}}</option>
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            {{mod.domain.0}}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <h3 style="padding-bottom: 15px;">{{langmod.SPHPLABEL22}}</h3>
+                            <div class="row" style="margin-left: 30px" id="contverphp">
+
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <h3 style="padding-bottom: 15px;">{{langmod.SPHPLABEL23}}</h3>
+                            <div class="row" style="margin-left: 30px">
+                                <div class="col-lg-4">{{langmod.SPHPLABEL24}}</div>
+                                <div class="col-lg-6">
+                                    <div class="switch">
+                                        <div class="onoffswitch">
+                                            <input type="checkbox" checked="" class="onoffswitch-checkbox" id="typephp" name="typephp" onclick="return changephp()">
+                                            <label class="onoffswitch-label" for="typephp">
+                                                <span class="onoffswitch-inner"></span>
+                                                <span class="onoffswitch-switch"></span>
+                                            </label>
+                                            <input type="hidden" id="typephp-h" value="{{mod.php}}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-left: 20px">
+                    <div class="col-lg-12" style="padding-top: 35px;display: {{exploret}}" id="exploret"></div>
+                </div>
+            </div>
+            <div class="row"  style="padding-top: 40px">
+                <div class="col-lg-12">
+                    <button class="btn btn-success btn-xs pull-right" id="updateversionfpm">{{langmod.SPHPLABEL21}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="ibox-content" id="divcontenedor">
+            <div class="row ">
+                <div class="col-lg-12">
+                    <ul class="stat-list">
+                        <li id="inddom">
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper wrapper-content" style="margin-top: 35px">
+    {% include 'footer.html' %}
+</div>
+</div>

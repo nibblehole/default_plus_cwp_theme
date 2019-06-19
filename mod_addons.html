@@ -1,0 +1,954 @@
+{% set app = mod.addons_mod %}
+{% if app == 'filemanager' %}{% set swlm = ' active' %}{% set diclm = 'show' %}{% else %}{% set swlm = '' %}{% set diclm = '' %}{% endif %}
+{% if app == 'wordpress' %}{% set swwp = ' active' %}{% set dicwp = 'show' %}{% else %}{% set swwp = '' %}{% set dicwp = '' %}{% endif %}
+{% if app == 'prestashop' %}{% set swps = ' active' %}{% set dicps = 'show' %}{% else %}{% set swps = '' %}{% set dicps = '' %}{% endif %}
+{% if app == 'joomla' %}{% set swjl = ' active' %}{% set dicjl = 'show' %}{% else %}{% set swjl = '' %}{% set dicjl = '' %}{% endif %}
+{% if app == 'drupal' %}{% set swdp = ' active' %}{% set dicdp = 'show' %}{% else %}{% set swdp = '' %}{% set dicdp = '' %}{% endif %}
+{% if app == 'filemanager' %}{% set swlm = ' active' %}{% set diclm = 'show' %}{% else %}{% set swlm = '' %}{% set diclm = '' %}{% endif %}
+
+<div class="row  border-bottom white-bg dashboard-header">
+    {% if mod.fsl == 1 %}
+        {% set stflalert ='block' %}
+    {% else %}
+        {% set stflalert ='none' %}
+    {% endif %}
+    <div class="row  alert alert-warning col-lg-12" style="margin-left: 5px; padding-right: 5px;display:{{stflalert}}" id="alertfl">
+        <strong>{{langene.GALARTFILEBLOCK}}</strong>
+    </div>
+    <div class="col-lg-12">
+        <h2>{{langmod.ADDDTLASW}} ({{users}})</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="?">Home</a></li>
+            <li class="breadcrumb-item active"><strong>{{langmod.ADDDTLASW}}</strong></li>
+            <li class="breadcrumb-item active"><strong>{{mod.addons_mod}}</strong></li>
+
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <br>
+        <div class="row">
+            <br>
+            <div class="col-lg-8 ibox-content">
+                <div class="">
+                    <div class="col-lg-12">
+                        <div class="tabs-container">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li><a  class="nav-link{{swwp}} {{dicwp}}"  href="?module=addons&acc=wordpress"><i class="fa fa-wordpress"></i> {{langmod.ADDTLMENU3}}</a></li>
+                                <li><a class="nav-link{{swps}} {{dicps}}"   href="?module=addons&acc=prestashop"><i class="fa fa-male"></i> {{langmod.ADDTLMENU4}}</a></li>
+                                <li><a class="nav-link{{swjl}} {{dicjl}}"   href="?module=addons&acc=joomla"><i class="fa fa-joomla"></i> {{langmod.ADDTLMENU5}}</a></li>
+                                <li><a class="nav-link{{swdp}} {{dicdp}}"   href="?module=addons&acc=drupal"><i class="fa fa-drupal"></i> {{langmod.ADDTLMENU6}}</a></li>
+                                <li><a class="nav-link{{swlm}} {{diclm}}"    href="?module=addons&acc=filemanager"><i class="fa fa-laptop"></i> {{langmod.ADDTLMENU2}}</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <!------------------------FILE MANAGER------------------------------->
+                                <div role="tabpanel" id="tab-1" class="tab-pane{{swlm}} {{diclm}}">
+                                    <div class="col-lg-12">
+                                        {% if mod.stfilemng == 0 %}
+                                        <div id="row1" style="margin-top: 25px">
+                                            <div class="row text-center" style="margin-top: 15px" >
+                                                <div>
+                                                    <b>{{langmod.PASS1}}</b>
+                                                </div>
+                                            </div>
+                                            <div class="row text-center" style="margin-top: 15px">
+                                                <div class="col-lg-offset-4 col-lg-4">
+                                                    <input type="text" class="form-control text-center" id="pass1fm" placeholder="{{langmod.TYPEPASS}}">
+                                                </div>
+                                            </div>
+                                            <div class="row text-center" style="margin-top: 25px"  id="row2">
+                                                <div>
+                                                    <b>{{langmod.PASS2}}</b>
+                                                </div>
+                                            </div>
+                                            <div class="row text-center" style="margin-top: 15px">
+                                                <div class="col-lg-offset-4 col-lg-4">
+                                                    <input type="text" class="form-control text-center" id="pass2fm" placeholder="{{langmod.TYPEPASS}}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {% endif %}
+                                        <div class="row" style="margin-top: 25px" id="rowon">
+                                            <div class="panel" id="row3">
+                                                {% if mod.stfilemng == 1 %}
+                                                    <div class="row col-lg-10">
+                                                        <div class='alert alert-danger' id="alert-delete-filemanager" style="display: none">
+                                                            <div style="margin-bottom: 15px">{{langmod.DESINTALL}}  <a href="#" onclick="return alertdeletefilemanager(1)"><strong>{{langmod.TYES}}</strong></a> / <a href="#" onclick="return alertdeletefilemanager(0)"><strong>{{langmod.TNOT}}</strong></a></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12 text-center">
+                                                            <div style="margin-bottom: 15px">[<samp style="color: #4ca44c"><b>{{langmod.ADDEFMBTNON}}</b></samp>]</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row col-lg-12">
+                                                        <div class='alert alert-success'>
+                                                            <strong>{{langmod.SUCCESS}}</strong> {{langmod.EXISTINSTALL}} <a target='_blank' href='http://{{mod.domain}}/filemanager/'>http://{{mod.domain}}/filemanager/</a> !
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row col-lg-6 col-lg-offset-3 text-center">
+                                                        <button type="button" class="btn btn-warning btn-block" id="btn-delete-filemanager" >DELETE</button>
+                                                    </div>
+                                                    <br><br><br>
+                                            {% else %}
+                                                <div id="btnoff" class="text-center col-lg-8 col-lg-offset-2">
+                                                    <button type="button" class="btn btn-warning btn-block" id="btn-addons-efm-add">{{langmod.ADDEFMBTNOFF}}</button>
+                                                </div>
+                                                <div class="row" style="margin-top: 15px; display: none"  id="install">
+                                                    <div class="col-lg-12">
+                                                        <p class="text-center">installing     ...</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3" id="btnon" style="display: none">
+                                                    <button type="button" class="btn btn-success btn-block">{{langmod.ADDEFMBTNON}}</button>
+                                                </div>
+                                            {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!------------------------WP------------------------------->
+                                <div role="tabpanel" id="tab-2" class="tab-pane{{swwp}} {{dicwp}}">
+                                    <div class="panel-body">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="panel panel-default" id="wptap1">
+                                                <div class="panel-heading white-bg">
+                                                    <h4 class="panel-title">{{langmod.ADDDWP4}}</h4>
+                                                    <div class="panel-controls panel-controls-right">
+                                                    </div>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: auto;">
+                                                        <div class="panel table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+                                                            <table class="table table-striped">
+                                                                <thead>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP5}}</b>
+                                                                        <p>{{langmod.ADDDWP6}}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11">
+                                                                            <select  class="form-control" id="wpurl">
+                                                                                <option value="http://">http://</option>
+                                                                                <option value="http://www.">http://www.</option>
+                                                                                <option value="https://">https://</option>
+                                                                                <option value="https://">https://www.</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP7}}</b>
+                                                                        <p>{{langmod.ADDDWP8}}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11">
+                                                                            <select  class="form-control" id="wpdomain">
+                                                                                <option value="">{{langmod.ADDDWP9}}</option>
+                                                                                {% for domains in mod.domains %}
+                                                                                    <option value="{{domains.path}}||{{domains.domain}}">{{domains.domain}}</option>
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP10}}</b>
+                                                                        <p>{{langmod.ADDDWP11}}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11">
+                                                                            <input type="text" class="form-control" id="wppach" value="wp">
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="slimScrollBar ui-draggable" style="background: rgb(243, 243, 243); height: 5px; position: absolute; bottom: 3px; opacity: 0.4; display: none; border-radius: 5px; z-index: 99; width: 636px; left: 0px;"></div>
+                                                        <div class="slimScrollRail" style="width: 100%; height: 5px; position: absolute; bottom: 3px; display: none; border-radius: 5px; background: rgb(51, 51, 51); opacity: 0.3; z-index: 90;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-12">
+                                            <!-- col-lg-6 start here -->
+                                            <div class="panel panel-default" id="wptab3">
+                                                <!-- Start .panel -->
+                                                <div class="panel-heading white-bg">
+                                                    <h4 class="panel-title">{{langmod.ADDDWP12}}</h4>
+                                                    <div class="panel-controls panel-controls-right">
+                                                    </div>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: auto;">
+                                                        <div class="panel table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+                                                            <table class="table table-striped">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP13}}</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11">
+                                                                            <select  class="form-control" id="wplang">
+                                                                                <option value="fr">{{langmod.ADDDWP14}}</option>
+                                                                                <option value="en" selected>{{langmod.ADDDWP15}}</option>
+                                                                                <option value="it">{{langmod.ADDDWP16}}</option>
+                                                                                <option value="es">{{langmod.ADDDWP17}}</option>
+                                                                                <option value="ru">{{langmod.ADDDWP18}}</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="slimScrollBar ui-draggable" style="background: rgb(243, 243, 243); height: 5px; position: absolute; bottom: 3px; opacity: 0.4; display: none; border-radius: 5px; z-index: 99; width: 636px; left: 0px;"></div>
+                                                        <div class="slimScrollRail" style="width: 100%; height: 5px; position: absolute; bottom: 3px; display: none; border-radius: 5px; background: rgb(51, 51, 51); opacity: 0.3; z-index: 90;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-12">
+                                            <!-- col-lg-6 start here -->
+                                            <div class="panel panel-default" id="wptab4">
+                                                <!-- Start .panel -->
+                                                <div class="panel-heading white-bg">
+                                                    <h4 class="panel-title">{{langmod.ADDDWP19}}</h4>
+                                                    <div class="panel-controls panel-controls-right">
+                                                    </div>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: auto;">
+                                                        <div class="panel table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+                                                            <table class="table table-striped">
+                                                                <thead>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP20}} </b>
+                                                                        <p>{{langmod.ADDDWP21}}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" id="wpbd" maxlength="7" value="{{mod.randbd}}"></div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP22}}</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" id="wpuserdb" maxlength="7" value="{{mod.randbd}}"></div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP23}}</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-6">
+                                                                                    <input type="text" class="form-control" id="wppassbd" maxlength="20"  value="{{mod.passrand}}" placeholder="{{langmod.ADDDWP25}}">
+                                                                                </div>
+                                                                                <div class="col-lg-6">
+                                                                                    <div class="col-sm-12"><a href="#" onclick="return changerrandom('wppassbd')" data-toggle="tooltip" data-placement="top" title="" data-original-title="Change suggested password"><i class="fa fa-cog"></i></a>
+                                                                                        <div class="btn-group dropdown mb10 mr10">
+                                                                                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                                                                {{langmod.FTPENCRYTED}}
+                                                                                                <span class="caret"></span>
+                                                                                            </button>
+                                                                                            <ul class="dropdown-menu right animated fadeIn" role="menu" style="margin-left: 1px;">
+                                                                                                <li>
+                                                                                                    <select class="form-control" id="lengthpass" title="{{langmod.FTPLENGTH}}" style="z-index: 99999">
+                                                                                                        <option value="7" selected> {{langmod.FTPLENGTH}}  7</option>
+                                                                                                        <option value="8"> {{langmod.FTPLENGTH}}  8</option>
+                                                                                                        <option value="9"> {{langmod.FTPLENGTH}}  9</option>
+                                                                                                        <option value="10" selected> {{langmod.FTPLENGTH}} 10</option>
+                                                                                                        <option value="11"> {{langmod.FTPLENGTH}} 11</option>
+                                                                                                        <option value="12"> {{langmod.FTPLENGTH}} 12</option>
+                                                                                                        <option value="13"> {{langmod.FTPLENGTH}} 13</option>
+                                                                                                        <option value="14"> {{langmod.FTPLENGTH}} 14</option>
+                                                                                                        <option value="15"> {{langmod.FTPLENGTH}} 15</option>
+                                                                                                    </select>
+                                                                                                </li>
+                                                                                                <li>
+                                                                                                    <select class="form-control"  id="typepass" title="{{langmod.FTPTYPE}}" style="margin-top: 5px">
+                                                                                                        <option value="1">{{langmod.FTPTYPE}} {{langmod.FTPALF}}</option>
+                                                                                                        <option value="2" selected>{{langmod.FTPTYPE}} {{langmod.FTPALFNUM}}</option>
+                                                                                                        <option value="3">{{langmod.FTPTYPE}} {{langmod.FTPALFNUMSIG}}</option>
+                                                                                                    </select>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="slimScrollBar ui-draggable" style="background: rgb(243, 243, 243); height: 5px; position: absolute; bottom: 3px; opacity: 0.4; display: none; border-radius: 5px; z-index: 99; width: 636px; left: 0px;"></div>
+                                                        <div class="slimScrollRail" style="width: 100%; height: 5px; position: absolute; bottom: 3px; display: none; border-radius: 5px; background: rgb(51, 51, 51); opacity: 0.3; z-index: 90;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p align="center"><button type="button" id="generate_wp" class="btn btn-success mr5 mb10">{{langmod.ADDDWP24}}</button></p>
+                                    </div>
+                                </div>
+                                <!------------------------PS------------------------------->
+                                <div role="tabpanel" id="tab-3" class="tab-pane{{swps}} {{dicps}}">
+                                    <div class="panel-body">
+                                        <div id="messageps" style="display: none; margin-left: 15px;margin-right: 15px"></div>
+
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="panel panel-default" id="pstap1">
+                                                <div class="panel-heading white-bg">
+                                                    <h4 class="panel-title">{{langmod.ADDDWP4}}</h4>
+                                                    <div class="panel-controls panel-controls-right">
+                                                    </div>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: auto;">
+                                                        <div class="panel table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+                                                            <table class="table table-striped">
+                                                                <thead>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP5}}</b>
+                                                                        <p>{{langmod.ADDDWP6}}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11">
+                                                                            <select  class="form-control" id="psurl">
+                                                                                <option value="http://">http://</option>
+                                                                                <option value="http://www.">http://www.</option>
+                                                                                <option value="https://">https://</option>
+                                                                                <option value="https://">https://www.</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP7}}</b>
+                                                                        <p>{{langmod.ADDDWP8}}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11">
+                                                                            <select  class="form-control" id="psdomain">
+                                                                                <option value="">{{langmod.ADDDWP9}}</option>
+                                                                                {% for domains in mod.domains %}
+                                                                                <option value="{{domains.path}}||{{domains.domain}}">{{domains.domain}}</option>
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP10}}</b>
+                                                                        <p>{{langmod.ADDDWP11}}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" maxlength="20" id="pspach" value="ps"></div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="slimScrollBar ui-draggable" style="background: rgb(243, 243, 243); height: 5px; position: absolute; bottom: 3px; opacity: 0.4; display: none; border-radius: 5px; z-index: 99; width: 636px; left: 0px;"></div>
+                                                        <div class="slimScrollRail" style="width: 100%; height: 5px; position: absolute; bottom: 3px; display: none; border-radius: 5px; background: rgb(51, 51, 51); opacity: 0.3; z-index: 90;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="panel panel-default" id="pstab2">
+                                                <div class="panel-heading white-bg">
+                                                    <h4 class="panel-title">{{langmod.ADDADMINACCOUNT}}</h4>
+                                                    <div class="panel-controls panel-controls-right">
+                                                    </div>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: auto;">
+                                                        <div class="panel table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+                                                            <table class="table table-striped">
+                                                                <thead>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                <!--tr>
+                                                                    <td>
+                                                                        <b>Admin Username</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" id="psadminuser" value="admin"></div>
+                                                                    </td>
+                                                                </tr-->
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDPS03}}</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" id="psadminemail" placeholder="{{langmod.ADDPS01}}"></div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDPS04}}</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" id="psadminpass" maxlength ="20" value="" placeholder="{{langmod.ADDPS02}}"></div>
+                                                                    </td>
+                                                                </tr>
+
+
+                                                                </tbody>
+                                                            </table></div><div class="slimScrollBar ui-draggable" style="background: rgb(243, 243, 243); height: 5px; position: absolute; bottom: 3px; opacity: 0.4; display: none; border-radius: 5px; z-index: 99; width: 636px; left: 0px;"></div><div class="slimScrollRail" style="width: 100%; height: 5px; position: absolute; bottom: 3px; display: none; border-radius: 5px; background: rgb(51, 51, 51); opacity: 0.3; z-index: 90;"></div></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-12">
+                                            <!-- col-lg-6 start here -->
+                                            <div class="panel panel-default" id="pstab3">
+                                                <!-- Start .panel -->
+                                                <div class="panel-heading white-bg">
+                                                    <h4 class="panel-title">{{langmod.ADDDWP12}}</h4>
+                                                    <div class="panel-controls panel-controls-right">
+                                                    </div>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: auto;">
+                                                        <div class="panel table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+                                                            <table class="table table-striped">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP13}}</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11">
+                                                                            <select  class="form-control" id="pslang">
+                                                                                <option value="fr">{{langmod.ADDDWP14}}</option>
+                                                                                <option value="en" selected>{{langmod.ADDDWP15}}</option>
+                                                                                <option value="it">{{langmod.ADDDWP16}}</option>
+                                                                                <option value="es">{{langmod.ADDDWP17}}</option>
+                                                                                <option value="ru">{{langmod.ADDDWP18}}</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP27}}</b>
+                                                                    </td>
+                                                                    <td><div class="col-lg-12 col-md-11">
+                                                                        <select  class="form-control" id="psversion">
+                                                                            <option value="1.7" selected>1.7*</option>
+                                                                            <option value="1.6">1.6*</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                </tbody>
+                                                            </table></div>
+                                                        <div class="slimScrollBar ui-draggable" style="background: rgb(243, 243, 243); height: 5px; position: absolute; bottom: 3px; opacity: 0.4; display: none; border-radius: 5px; z-index: 99; width: 636px; left: 0px;"></div>
+                                                        <div class="slimScrollRail" style="width: 100%; height: 5px; position: absolute; bottom: 3px; display: none; border-radius: 5px; background: rgb(51, 51, 51); opacity: 0.3; z-index: 90;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-12">
+                                            <!-- col-lg-6 start here -->
+                                            <div class="panel panel-default" id="pstab4">
+                                                <!-- Start .panel -->
+                                                <div class="panel-heading white-bg">
+                                                    <h4 class="panel-title">{{langmod.ADDDWP19}}</h4>
+                                                    <div class="panel-controls panel-controls-right">
+                                                    </div>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: auto;">
+                                                        <div class="panel table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+                                                            <table class="table table-striped">
+                                                                <thead>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP20}} </b>
+                                                                        <p>{{langmod.ADDDWP21}}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" id="psbd" maxlength="7" value="{{mod.randbd}}"></div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP22}}</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" id="psuserdb" maxlength="7" value="{{mod.randbd}}"></div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP23}}</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" id="pspassbd" maxlength="20" value="" placeholder="{{langmod.ADDDWP25}}"></div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                </tbody>
+                                                            </table></div><div class="slimScrollBar ui-draggable" style="background: rgb(243, 243, 243); height: 5px; position: absolute; bottom: 3px; opacity: 0.4; display: none; border-radius: 5px; z-index: 99; width: 636px; left: 0px;"></div><div class="slimScrollRail" style="width: 100%; height: 5px; position: absolute; bottom: 3px; display: none; border-radius: 5px; background: rgb(51, 51, 51); opacity: 0.3; z-index: 90;"></div></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p align="center"><button type="button" id="generate_ps" class="btn btn-success mr5 mb10">{{langmod.ADDDWP24}}</button></p>
+                                    </div>
+                                </div>
+                                <!------------------------JOOMLA------------------------------->
+                                <div role="tabpanel" id="tab-4" class="tab-pane{{swjl}} {{dicjl}}">
+                                    <div class="panel-body">
+                                        <div id="messagejl" style="display: none; margin-left: 15px;margin-right: 15px"></div>
+
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="panel panel-default" id="jltap1">
+                                                <div class="panel-heading white-bg">
+                                                    <h4 class="panel-title">{{langmod.ADDDWP4}}</h4>
+                                                    <div class="panel-controls panel-controls-right">
+                                                    </div>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: auto;">
+                                                        <div class="panel table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+                                                            <table class="table table-striped">
+                                                                <thead>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP7}}</b>
+                                                                        <p>{{langmod.ADDDWP8}}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11">
+                                                                            <select  class="form-control" id="jldomain">
+                                                                                <option value="">{{langmod.ADDDWP9}}</option>
+                                                                                {% for domains in mod.domains %}
+                                                                                <option value="{{domains.path}}||{{domains.domain}}">{{domains.domain}}</option>
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP10}}</b>
+                                                                        <p>{{langmod.ADDDWP11}}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" maxlength="20" id="jlpach" value="jl"></div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="slimScrollBar ui-draggable" style="background: rgb(243, 243, 243); height: 5px; position: absolute; bottom: 3px; opacity: 0.4; display: none; border-radius: 5px; z-index: 99; width: 636px; left: 0px;"></div>
+                                                        <div class="slimScrollRail" style="width: 100%; height: 5px; position: absolute; bottom: 3px; display: none; border-radius: 5px; background: rgb(51, 51, 51); opacity: 0.3; z-index: 90;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="panel panel-default" id="jltab4">
+                                                <div class="panel-heading white-bg">
+                                                    <h4 class="panel-title">{{langmod.ADDDWP19}}</h4>
+                                                    <div class="panel-controls panel-controls-right">
+                                                    </div>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: auto;">
+                                                        <div class="panel table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+                                                            <table class="table table-striped">
+                                                                <thead>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP20}} </b>
+                                                                        <p>{{langmod.ADDDWP21}}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" id="jlbd" maxlength="7" value="{{mod.randbd}}"></div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP22}}</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" id="jluserdb" maxlength="7" value="{{mod.randbd}}"></div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDWP23}}</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" id="jlpassbd" maxlength="20" value="" placeholder="{{langmod.ADDDWP25}}"></div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="slimScrollBar ui-draggable" style="background: rgb(243, 243, 243); height: 5px; position: absolute; bottom: 3px; opacity: 0.4; display: none; border-radius: 5px; z-index: 99; width: 636px; left: 0px;"></div>
+                                                        <div class="slimScrollRail" style="width: 100%; height: 5px; position: absolute; bottom: 3px; display: none; border-radius: 5px; background: rgb(51, 51, 51); opacity: 0.3; z-index: 90;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p align="center"><button type="button" id="generate_jl" class="btn btn-success mr5 mb10">{{langmod.ADDDWP24}}</button></p>
+                                    </div>
+                                </div>
+                                <!------------------------DRUPAL------------------------------->
+                                <div role="tabpanel" id="tab-5" class="tab-pane{{swdp}} {{dicdp}}">
+                                    <div class="panel-body">
+                                        <div id="messagedp" style="display: none; margin-left: 15px;margin-right: 15px"></div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <!-- col-lg-6 start here -->
+                                            <div class="panel panel-default" id="fmtap1">
+                                                <!-- Start .panel -->
+                                                <div class="panel-heading white-bg">
+                                                    <h4 class="panel-title">{{langmod.ADDDDP4}}</h4>
+                                                    <div class="panel-controls panel-controls-right">
+                                                    </div>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: auto;">
+                                                        <div class="panel table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+                                                            <table class="table table-striped">
+                                                                <thead>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDDP7}}</b>
+                                                                        <p>{{langmod.ADDDDP8}}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11">
+                                                                            <select  class="form-control" id="dpdomain">
+                                                                                <option value="">{{langmod.ADDDDP9}}</option>
+                                                                                {% for domains in mod.domains %}
+                                                                                <option value="{{domains.path}}||{{domains.domain}}">{{domains.domain}}</option>
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDDP10}}</b>
+                                                                        <p>{{langmod.ADDDDP11}}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" id="dppach" value="dp"></div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                </tbody>
+                                                            </table></div><div class="slimScrollBar ui-draggable" style="background: rgb(243, 243, 243); height: 5px; position: absolute; bottom: 3px; opacity: 0.4; display: none; border-radius: 5px; z-index: 99; width: 636px; left: 0px;"></div><div class="slimScrollRail" style="width: 100%; height: 5px; position: absolute; bottom: 3px; display: none; border-radius: 5px; background: rgb(51, 51, 51); opacity: 0.3; z-index: 90;"></div></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="panel panel-default" id="pstab2">
+                                                <div class="panel-heading white-bg">
+                                                    <h4 class="panel-title">{{langmod.ADDADMINACCOUNT}}</h4>
+                                                    <div class="panel-controls panel-controls-right">
+                                                    </div>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: auto;">
+                                                        <div class="panel table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+                                                            <table class="table table-striped">
+                                                                <thead>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDADMINUSER}}</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" id="dpadminuser" value="admin"></div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDPS03}}</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" id="pdadminemail" placeholder="{{langmod.ADDPS01}}"></div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDPS04}}</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" id="pdadminpass" maxlength ="20" value="" placeholder="{{langmod.ADDPS02}}"></div>
+                                                                    </td>
+                                                                </tr>
+
+
+                                                                </tbody>
+                                                            </table></div><div class="slimScrollBar ui-draggable" style="background: rgb(243, 243, 243); height: 5px; position: absolute; bottom: 3px; opacity: 0.4; display: none; border-radius: 5px; z-index: 99; width: 636px; left: 0px;"></div><div class="slimScrollRail" style="width: 100%; height: 5px; position: absolute; bottom: 3px; display: none; border-radius: 5px; background: rgb(51, 51, 51); opacity: 0.3; z-index: 90;"></div></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-lg-12 col-md-12">
+                                            <!-- col-lg-6 start here -->
+                                            <div class="panel panel-default" id="dptab4">
+                                                <!-- Start .panel -->
+                                                <div class="panel-heading white-bg">
+                                                    <h4 class="panel-title">{{langmod.ADDDDP19}}</h4>
+                                                    <div class="panel-controls panel-controls-right">
+                                                    </div>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: auto;">
+                                                        <div class="panel table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+                                                            <table class="table table-striped">
+                                                                <thead>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDDP20}} </b>
+                                                                        <p>{{langmod.ADDDDP21}}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" id="dpbd" maxlength="7" value="{{mod.randbd}}"></div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDDP22}}</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" id="dpuserdb" maxlength="7" value="{{mod.randbd}}"></div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{langmod.ADDDDP23}}</b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12 col-md-11"><input type="text" class="form-control" id="dppassbd" maxlength="20" value="" placeholder="{{langmod.ADDDWP25}}"></div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                </tbody>
+                                                            </table></div><div class="slimScrollBar ui-draggable" style="background: rgb(243, 243, 243); height: 5px; position: absolute; bottom: 3px; opacity: 0.4; display: none; border-radius: 5px; z-index: 99; width: 636px; left: 0px;"></div><div class="slimScrollRail" style="width: 100%; height: 5px; position: absolute; bottom: 3px; display: none; border-radius: 5px; background: rgb(51, 51, 51); opacity: 0.3; z-index: 90;"></div></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p align="center"><button type="button" id="generate_dp" class="btn btn-success mr5 mb10">{{langmod.ADDDDP24}}</button></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="ibox-content">
+                    {% if mod.addons_mod == 'wordpress' %}{% set swtabwp = 'block' %}{% else %}{% set swtabwp = 'none' %}{% endif %}
+                    {% if mod.addons_mod == 'prestashop' %}{% set swtabps = 'block' %}{% else %}{% set swtabps = 'none' %}{% endif %}
+                    {% if mod.addons_mod == 'joomla' %}{% set swtabjl = 'block' %}{% else %}{% set swtabjl = 'none' %}{% endif %}
+                    {% if mod.addons_mod == 'drupal' %}{% set swtabdp = 'block' %}{% else %}{% set swtabdp = 'none' %}{% endif %}
+                    {% if mod.addons_mod == 'filemanager' %}{% set swtabfl = 'block' %}{% else %}{% set swtabfl = 'none' %}{% endif %}
+                    <div style="display: {{swtabwp}}" class="tabder" id="swtabwp">
+                        <input type="hidden" id="valuedelete" value="">
+                        <input type="hidden" id="line" value=""><br>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="padding-left: 15px"><h3>{{langmod.ADDDTLTAB1}}</h3></div>
+                            <div class="panel-body" id="panelwp">
+                                <div class="table-responsive" style="overflow: hidden; width: 95%; height: auto;">
+                                    <table class="table table-striped" style="width: 95%;">
+                                        <thead>
+                                        <tr>
+                                            <th class="per2">{{langmod.ADDDWP3}}</th>
+                                            <th>{{langmod.ADDDWP2}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="trpanelwp">
+                                        {% set line =1 %}
+                                        {% for wp in mod.wp %}
+                                        <tr id="tdwp{{line}}">
+                                            <td>
+                                                <a href="#"  title="" class="tipB" data-original-title="Data Base: {{wp.dbwp}}  UserDate Base: {{wp.userbdwp}}"><i class="fa fa-database"></i></a>
+                                                <a href="#" onclick="return deletwp('{{wp.domain}}@{{wp.path}}@{{wp.dbwp}}@{{wp.userbdwp}}',{{line}},'wp')"><i class="fa fa-trash"></i></a>
+                                            </td>
+                                            <td><a href="http://{{wp.domain}}/{{wp.sub}}" target="_blank">{{wp.domain}}/{{wp.sub}}</a><p>({{wp.path}})</p></td>
+                                        </tr>
+                                        {% set line =line+1 %}
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: {{swtabps}}" class="tabder" id="swtabps">
+                        <input type="hidden" id="valuedelete" value="">
+                        <input type="hidden" id="line" value=""><br>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="padding-left: 15px"><h3>{{langmod.ADDDTLTAB2}}</h3></div>
+                            <div class="panel-body" id="panelps">
+                                <div class="table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th class="per2">{{langmod.ADDDWP3}}</th>
+                                            <th>{{langmod.ADDDWP2}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="trpanelps">
+                                        {% set line =1 %}
+                                        {% for ps in mod.ps %}
+                                        <tr id="tdps{{line}}">
+                                            <td>
+                                                <a href="#"  title="" class="tipB" data-original-title="Data Base: {{ps.dbwp}}  UserDate Base: {{ps.userbdwp}}"><i class="fa fa-database"></i></i></a>
+                                                <a href="#" onclick="return deletwp('{{ps.domain}}@{{ps.path}}@{{ps.dbwp}}@{{ps.userbdwp}}',{{line}},'ps')"><i class="fa fa-trash"></i></a>
+                                            </td>
+                                            <td><a href="{{ps.domain}}" target="_blank">{{ps.domain}}</a><p>({{ps.path}})</p></td>
+
+                                        </tr>
+                                        {% set line =line+1 %}
+                                        {% endfor %}
+                                        </tbody>
+                                    </table></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: {{swtabjl}}" class="tabder" id="swtabjl">
+                        <input type="hidden" id="valuedelete" value=""><input type="hidden" id="line" value=""><br>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="padding-left: 15px"><h3>{{langmod.ADDDTLTAB3}}</h3></div>
+                            <div class="panel-body" id="paneljl">
+                                <div class="table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th class="per2">{{langmod.ADDDDP3}}</th>
+                                            <th>{{langmod.ADDDWP2}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="trpaneljl">
+                                        {% set line =1 %}
+                                        {% for dp in mod.jl %}
+                                        <tr id="tdjl{{line}}">
+                                            <td>
+                                                <a href="#"  title="" class="tipB" data-original-title="Data Base: {{dp.dbjl}}  UserDate Base: {{dp.userbdjl}}"><i aria-hidden="true" class="fa fa-database"></i></a>
+                                                <a href="#" onclick="return deletwp('{{dp.domain}}@{{dp.path}}@{{dp.dbjl}}@{{dp.userbdjl}}',{{line}},'jl')"><i aria-hidden="true" class="fa fa-trash"></i></a>
+                                            </td>
+                                            <td><a href="{{dp.domain}}" target="_blank">{{dp.domain}}</a><p>({{dp.path}})</p></td>
+                                        </tr>
+                                        {% set line =line+1 %}
+                                        {% endfor %}
+                                        </tbody>
+                                    </table></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: {{swtabdp}}" class="tabder" id="swtabdp">
+                        <input type="hidden" id="valuedelete" value=""><input type="hidden" id="line" value=""><br>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="padding-left: 15px"><h3>{{langmod.ADDDTLTAB4}}</h3></div>
+                            <div class="panel-body" id="paneldp">
+                                <div class="table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th class="per2">{{langmod.ADDDDP3}}</th>
+                                            <th>{{langmod.ADDDWP2}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="trpaneldp">
+                                        {% set line =1 %}
+                                        {% for dp in mod.dp %}
+                                        <tr id="tddp{{line}}">
+                                            <td>
+                                                <a href="#"  title="" class="tipB" data-original-title="Data Base: {{dp.dbwp}}  UserDate Base: {{dp.userbdwp}}"><i class="fa fa-database"></i></a>
+                                                <a href="#" onclick="return deletwp('{{dp.domain}}@{{dp.path}}@{{dp.dbwp}}@{{dp.userbdwp}}',{{line}},'dp')"><i class="fa fa-trash"></i></i></a>
+                                            </td>
+                                            <td><a href="{{dp.domain}}" target="_blank">{{dp.domain}}</a> <p> ({{dp.path}})</p></td>
+                                        </tr>
+                                        {% set line =line+1 %}
+                                        {% endfor %}
+                                        </tbody>
+                                    </table></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: {{swtabfl}}" class="tabder" id="swtabfl">
+                        <h4>{{langmod.ADDDDP32}} </h4>
+                        <small>{{langmod.ADDDDP33}}</small>
+
+                        <h4 style="margin-top: 25px">{{langmod.ADDDDP34}} </h4>
+                        <small>{{langmod.ADDDDP35}}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content" style="margin-top: 35px">
+        {% include 'footer.html' %}
+    </div>
+</div>

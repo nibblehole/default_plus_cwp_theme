@@ -1,0 +1,330 @@
+<div class="row  border-bottom white-bg dashboard-header">
+    {% if mod.fsl == 1 %}
+    {% set stflalert ='block' %}
+    {% else %}
+    {% set stflalert ='none' %}
+    {% endif %}
+    <div class="row  alert alert-warning col-lg-12" style="margin-left: 5px; padding-right: 5px;display:{{stflalert}}" id="alertfl">
+        <strong>{{langene.GALARTFILEBLOCK}}</strong>
+    </div>
+    <div class="col-lg-10">
+        <h2>{{langmod.ETITLE}} ({{users}})</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="?">Home</a></li>
+            <li class="breadcrumb-item active"><strong>{{langmod.ETITLE}}</strong></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <br>
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="col-lg-12">
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li><a class="nav-link active" data-toggle="tab" href="#tab-1" onclick="return chancetabemail(0)">{{langmod.EEMAILACCOUNT}}</a></li>
+                            <li><a class="nav-link" data-toggle="tab" href="#tab-2" onclick="return chancetabemail(1)">{{langmod.EFORWARDER}}</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" id="tab-1" class="tab-pane active">
+                                <div class="panel-body">
+                                    <div>
+                                        <div class="ibox-title">
+                                            <div class="row">
+                                                <div class="col-lg-10">
+                                                    <h4>{{langmod.FTPLABEL1}}</h4>
+                                                </div>
+                                                {% if mod.email_accounts < mod.email_pack %}
+                                                    {% set swver ='block'%}
+                                                {% else %}
+                                                    {% set swver ='none'%}
+                                                {% endif %}
+                                                <div class="col-lg-2 text-right"  id="divbtnadd" style="display: {{swver}}">
+                                                    <button type="button" id="addemailbtn" class="btn btn-success btn-xs mr5 mb10"> {{langmod.EBNTADD}}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 ibox-content">
+                                            <div class="table-responsive">
+                                                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                                                    <table class="table table-striped table-bordered table-hover dataTables-example dataTable" id="DataTables_Table_0">
+                                                        <thead>
+                                                        <tr role="row">
+                                                            <th class="per5">#</th>
+                                                            <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="activate to sort column ascending">{{langmod.ETITLEEMAIL}}</th>
+                                                            <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="activate to sort column ascending">{{langmod.ETITLEDOMAIN}}</th>
+                                                            <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="activate to sort column ascending">{{langmod.EMLABEL10}}</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="activate to sort column ascending">{{langmod.ESPACE}}</th>
+                                                            <th class="per15">{{langmod.EACTION}}</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="contftp">
+                                                        {% set cont =1 %}
+                                                        {% for email in mod.email %}
+                                                        <tr id="tremail{{cont}}">
+                                                            <td>{{cont}}</td>
+                                                            <td class="sorting_1">{{email.email}}</td>
+                                                            <td class="center">{{email.domain}}</td>
+                                                            <td class="center">{{email.lastaccess}}</td>
+                                                            <td class="center">
+                                                                {% set usade = 0 %}
+                                                                    {% if email.quota == 0 %}
+                                                                        {% set quotauser = langmod.EILIMIT %}
+                                                                    {% else %}
+                                                                        {% set quotauser = ((email.quota/1024)/1024)|number_format(2, '.', ',') %}
+                                                                    {% endif %}
+                                                                    {% if email.quota != 0 %}
+                                                                        {% if email.usade == '' %}
+                                                                            {% set usade = 0 %}
+                                                                            {% set barra = 'progress-bar progress-bar-success' %}
+                                                                        {% else %}
+                                                                            {% set usade = (((100) / email.quota)*(email.usade/1000)) %}
+                                                                            {% if usade < 60 %}
+                                                                                {% set barra = 'progress-bar progress-bar-success' %}
+                                                                            {% elseif usade >60 and usade <75  %}
+                                                                                {% set barra = 'progress-bar progress-bar-warning' %}
+                                                                            {% else %}
+                                                                                {% set barra = 'progress-bar progress-bar-danger' %}
+                                                                            {% endif %}
+                                                                        {% endif %}
+                                                                {% endif %}
+                                                                <a href="#" onclick="return ediquotaemail('{{email.email}}','{{email.quota}}')" class="text-center"><i aria-hidden="true" class="fa fa-pencil-square-o"></i></a> {{quotauser}} MB
+                                                                <div class="progress progress-mini">
+                                                                    <!--div class="progress-bar {{barra}}" role="progressbar" aria-valuenow="{{usade|number_format(2, '.', ',')}}" aria-valuemin="0" aria-valuemax="100" style="width: {{usade|number_format(2, '.', ',')}}%;">{{usade|number_format(2, '.', ',')}}%</div-->
+                                                                    <div style="width: {{usade|number_format(2, '.', ',')}}%;" class="{{barra}}" id="baremailind"></div>
+                                                                </div>
+                                                            </td>
+
+                                                            <td align="center">
+                                                                <div class="row  text-center">
+                                                                    <div class="col-lg-5">
+                                                                        <button type="button" class="btn btn-primary btn-xs mr5 mb10" onclick="return emailchangepass('{{email.email}}')" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{langmod.ECHANGEPASS}}"><i class="fa fa-key"></i>  {{langmod.ECHANGEPASS}}</button>
+                                                                    </div>
+                                                                    {% if email.active == 1 %}
+                                                                        <div class="col-lg-3">
+                                                                            <!--input type="checkbox" id="btn{{email.email}}" onclick="return emailactive('{{email.email}}','{{email.active}}')" checked-->
+                                                                            <button type="button" class="btn btn-success btn-xs mr5 mb10" onclick="return emailactive('{{email.email}}','{{email.active}}')"  data-toggle="tooltip" data-placement="top" title="" data-original-title="{{langmod.EMACTIVE}}"><i class="fa fa-thumbs-up"></i>  {{langmod.EMACTIVE}}</button>
+                                                                        </div>
+                                                                    {% elseif email.active == 4%}
+                                                                        <div class="col-lg-3">
+                                                                             <!--input type="checkbox" id="btn{{email.email}}"  disabled-->
+                                                                            <button type="button" class="btn btn-warning btn-xs mr5 mb10 disabled"  data-toggle="tooltip" data-placement="top" title="" data-original-title="{{langmod.EMSUSPENDED}}" disabled><i class="fa fa-eye-slash"></i>  {{langmod.EMSUSPENDED}}</button>
+                                                                        </div>
+                                                                    {% else %}
+                                                                        <div class="col-lg-3">
+                                                                            <!--input type="checkbox" id="btn{{email.email}}" onclick="return emailactive('{{email.email}}','{{email.active}}')"-->
+                                                                            <button type="button" class="btn btn-warning btn-xs mr5 mb10" onclick="return emailactive('{{email.email}}','{{email.active}}')"  data-toggle="tooltip" data-placement="top" title="" data-original-title="{{langmod.EMSUSPENDED}}"><i class="fa fa-thumbs-down"></i>  {{langmod.EMSUSPENDED}}</button>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                    <div class="col-lg-3">
+                                                                        <button type="button" class="btn btn-danger btn-xs mr5 mb10" onclick="return emaildelete(0,'{{email.email}}',{{cont}})"  data-toggle="tooltip" data-placement="top" title="" data-original-title="{{langmod.EBTNDELETE}}"><i class="fa fa-trash"></i>  {{langmod.EBTNDELETE}}</button>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        {% set cont =cont+1 %}
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div role="tabpanel" id="tab-2" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="ibox-title">
+                                        {% if mod.email_accounts_forw < mod.email_pack_forw %}
+                                            {% set sefol='block' %}
+                                        {% else %}
+                                            {% set sefol='none' %}
+                                        {% endif %}
+
+                                        <div class="row pull-right" id="forwbtnadd" style="display: {{sefol}}">
+                                            <div class="col-lg-2">
+                                                <button type="button" id="addforwarbtn" onclick="return addforwarbtn()" class="btn btn-success btn-xs mr5 mb10">{{langmod.EBNTADDFW}}</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 100%; height: auto;">
+                                        <div class="table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+                                            <table  class="table table-striped table-bordered table-hover dataTables-example dataTable" id="DataTables_Table_1">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th class="per5">#</th>
+                                                        <th tabindex="0" aria-controls="DataTables_Table_1">{{langmod.ETITLEFW}}</th>
+                                                        <th tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="activate to sort column ascending">{{langmod.ETITLEFWTO}}</th>
+                                                        <th tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="activate to sort column ascending">{{langmod.ETITLEDOMAIN}}</th>
+                                                        <th >{{langmod.EACTION}}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="contenttrfo">
+                                                    {% set cont2 =1 %}
+                                                    {% for forward in mod.forward %}
+                                                        <tr id="trfw{{cont2}}">
+                                                            <td>{{cont2}}</td>
+                                                            <td >{{forward.address}} </td>
+                                                            <td align="center"  id="tdfw{{cont2}}">{{forward.goto}}</td>
+                                                            <td align="center" >{{forward.domain}}</td>
+                                                            <td align="center">
+                                                                <div class="row  text-center">
+                                                                    <div class="col-lg-3">
+                                                                        <button type="button" class="btn btn-primary btn-xs mr5 mb10" onclick="return editforwar('{{forward.address64}}','{{forward.goto64}}','{{cont2}}')"><i class="fa fa-pencil"></i>  {{langmod.EMLABEL7}}</button>
+                                                                    </div>
+                                                                {% if forward.active == 1 %}
+                                                                    <div class="col-lg-3">
+                                                                        <button type="button" class="btn btn-success btn-xs mr5 mb10" onclick="return forwardactive('{{forward.address64}}','{{forward.active}}')"><i class="fa fa-thumbs-up"></i>  {{langmod.EMACTIVE}}</button>
+                                                                     </div>
+                                                                {% elseif forward.active == 4%}
+                                                                    <div class="col-lg-3">
+                                                                        <button type="button" class="btn btn-warning btn-xs mr5 disabled" disabled><i class="fa fa-eye-slash"></i>  {{langmod.EMSUSPENDED}}</button>
+                                                                    </div>
+                                                                {% else %}
+                                                                    <div class="col-lg-3">
+                                                                        <button type="button" class="btn btn-warning btn-xs mr5 mb10" onclick="return forwardactive('{{forward.address64}}','{{forward.active}}')"><i class="fa fa-thumbs-down"></i>  {{langmod.EMSUSPENDED}}</button>
+                                                                    </div>
+                                                                {% endif %}
+                                                                    <div class="col-lg-3">
+                                                                        <button type="button" class="btn btn-danger btn-xs mr5 mb10" style="margin-left: 15px" onclick="return forwardelete(0,'{{forward.address64}}',{{cont2}})"><i class="fa fa-trash"></i>  {{langmod.EBTNDELETE}}</button>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    {% set cont2 =cont2+1 %}
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="slimScrollBar ui-draggable" style="background: rgb(243, 243, 243); height: 5px; position: absolute; bottom: 3px; opacity: 0.4; display: none; border-radius: 5px; z-index: 99; width: 826px;"></div>
+                                        <div class="slimScrollRail" style="width: 100%; height: 5px; position: absolute; bottom: 3px; display: none; border-radius: 5px; background: rgb(51, 51, 51); opacity: 0.3; z-index: 90;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+            {% set emailbar=100/mod.email_pack*mod.email_accounts %}
+            {% set emailbar_forw=100/mod.email_pack_forw*mod.email_accounts_forw %}
+            <div class="col-lg-3">
+                <div class="ibox-content" id="indemail" style="display: block">
+                    <ul class="stat-list">
+                        <li>
+                            <h2 class="no-margins" style="vertical-align: inherit;" id="tlftpind">{{langene.PGEMAIL}} {{mod.email_accounts}} / {{mod.email_pack}}</h2>
+                            <small style="vertical-align: inherit;">{{langmod.EMLABEL4}} / {{langmod.EMLABEL5}}</small>
+                            <div class="stat-percent">{{emailbar|round}}%</div>
+                            <div class="progress progress-mini">
+                                {% if emailbar >=26 and emailbar <=50 %}
+                                {% set classbar = 'progress-bar progress-bar-success' %}
+                                {% elseif emailbar >=51 and emailbar <=75 %}
+                                {% set classbar = 'progress-bar progress-bar-warning' %}
+                                {% elseif emailbar >75 %}
+                                {% set classbar = 'progress-bar progress-bar-danger' %}
+                                {% else %}
+                                {% set classbar = 'progress-bar' %}
+                                {% endif %}
+                                <div style="width: {{emailbar|round(1, 'floor')}}%;" class="{{classbar}}" id="baremailind"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="ibox-content" id="indforw" style="display: none">
+                    <ul class="stat-list">
+                        <li>
+                            <h2 class="no-margins" style="vertical-align: inherit;" id="tlforwind">{{langmod.PGFORWA}} {{mod.email_accounts_forw}} / {{mod.email_pack_forw}}</h2>
+                            <small style="vertical-align: inherit;">{{langmod.EMLABEL4}} / {{langmod.EMLABEL5}}</small>
+                            <div class="stat-percent">{{emailbar_forw|round}}%</div>
+                            <div class="progress progress-mini">
+                                {% if emailbar_forw >=26 and emailbar_forw <=50 %}
+                                {% set classbar = 'progress-bar progress-bar-success' %}
+                                {% elseif emailbar_forw >=51 and emailbar_forw <=75 %}
+                                {% set classbar = 'progress-bar progress-bar-warning' %}
+                                {% elseif emailbar_forw >75 %}
+                                {% set classbar = 'progress-bar progress-bar-danger' %}
+                                {% else %}
+                                {% set classbar = 'progress-bar' %}
+                                {% endif %}
+                                <div style="width: {{emailbar_forw|round(1, 'floor')}}%;" class="{{classbar}}" id="barforwind"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div style="margin-top: 15px">
+                    <div class="col-md-12 ibox-content">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4><span>{{langmod.EMAILSET}}</span></h4>
+                                <a href="#" class="minimize" style="display: none;">{{langmod.EMIN}}</a>
+                            </div>
+                            <div class="panel-body" style="padding-bottom:0;">
+                                <table width="100%">
+                                    <tbody>
+                                    <tr>
+                                        <td align="center"><b>{{langmod.ESSL}}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>{{langmod.EUSERNA}}</b>: {{langmod.EYOURMAIL}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>{{langmod.EINCONM}}</b>: {{mod.hostname}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>{{langmod.EIMAP}}</b>: 993</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>{{langmod.EPOP3}}</b>: 995</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>{{langmod.EOUT}}</b>: {{mod.hostname}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>{{langmod.ESMTP}}</b>: 465</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="padding-top: 35px" align="center"><b>{{langmod.ENOSSL}}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>{{langmod.EUSERNA}}</b>: {{langmod.EYOURMAIL}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>{{langmod.EINCONM}}</b>: {{langmod.EDOMAIN}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>{{langmod.EIMAP}}</b>: 143</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>{{langmod.EPOP3}}</b>: 110</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>{{langmod.EOUT}}</b>: {{langmod.EDOMAIN}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>{{langmod.ESMTP}}</b>: 25</td>
+                                    </tr>
+
+                                    </tbody></table>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content" style="margin-top: 35px">
+        {% include 'footer.html' %}
+    </div>
+</div>
+<style>
+    .dataTables_wrapper div.row{
+        width: 100%;
+    }
+</style>

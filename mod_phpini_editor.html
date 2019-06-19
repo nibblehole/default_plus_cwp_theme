@@ -1,0 +1,125 @@
+<div class="row  border-bottom white-bg dashboard-header">
+    {% if mod.fsl == 1 %}
+    {% set stflalert ='block' %}
+    {% else %}
+    {% set stflalert ='none' %}
+    {% endif %}
+    <div class="row  alert alert-warning col-lg-12" style="margin-left: 5px; padding-right: 5px;display:{{stflalert}}" id="alertfl">
+        <strong>{{langene.GALARTFILEBLOCK}}</strong>
+    </div>
+    <div class="col-lg-10">
+        <h2>{{langmod.NAMEMOD}}  ({{users}})</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="?">Home</a></li>
+            <li class="breadcrumb-item active"><strong>{{langmod.NAMEMOD}}</strong></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <br>
+        <div class="row" style="margin-left: 3px; margin-right: 3px">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="row ibox-title">
+                        <div class="col-lg-1">
+                            <b>{{langmod.PHPLABEL7}}</b>
+                        </div>
+                        <div class="col-lg-4">
+                            <select class="form-control" id="domainini">
+                                {% for domain in mod.domain %}
+                                    <option value="{{ domain }}">{{ domain }}</option>';
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-lg-1">
+                        </div>
+                        <div class="col-lg-1">
+                            <b>{{langmod.PHPLABEL8}}</b>
+                        </div>
+                        {% if mod.php == 'php-fpm' %}
+                            {% set filename= '.user.ini' %}
+                        {% else %}
+                            {% set filename= 'php.ini' %}
+                        {% endif %}
+                        <div class="col-lg-5" id="pathini">
+                            {{mod.path}}{{filename}}
+                        </div>
+                        <input id="hfilename" type="hidden" value="{{mod.path}}{{filename}}">
+                        <input id="valuehidden" type="hidden" value="{{mod.valuehidden}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>{{langmod.PHPLABEL5}}</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <p class="m-b-lg" style="margin-bottom: 15px">
+                            {{langmod.PHPLABEL4}}
+                        </p>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="text-center"><b>{{langmod.SETTING}}</b></th>
+                                <th class="text-center"><b>{{langmod.VALUE}}</b></th>
+                                <th class="text-center"><b>{{langmod.BTN_DELETE}}</b></th>
+                            </tr>
+                            </thead>
+                            <tbody id="conteditphp">
+                                {% for tab in mod.tab %}
+                                <tr>
+                                    <td><label class="col-form-label">{{tab.name}}</label></td>
+                                    <td>{% if tab.name2 =='date__timezone' %}
+                                            <input type="text" id="{{tab.name2}}" value="{{tab.value}}" placeholder="{{langmod.PHPELABEL3}}" class="typeahead_3 form-control">
+                                        {% else %}
+                                            <input type="text" id="{{tab.name2}}" value="{{tab.value}}"  class="form-control">
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        {% if tab.st ==1 %}
+                                        <button type="button" class="btn btn-default btn-xs" onclick="return disablephpini({{tab.st}},{{tab.line}})">{{langmod.BTN_ENABLE}}</button>
+                                        {% else %}
+                                        <button type="button" class="btn btn-warning btn-xs" onclick="return disablephpini({{tab.st}},{{tab.line}})">{{langmod.BTN_DISABLE}}</button>
+                                        {% endif %}
+                                        <button type="button" class="btn btn-danger btn-xs" onclick="return deletephpini(0,{{tab.line}},'{{tab.name2}}')">{{langmod.BTN_DELETE}}</button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div  class="text-center">
+                            <button class="btn btn-primary btn-xs" id="addphpini" type="button"><i class="fa fa-check"></i>&nbsp;{{langmod.BTNADDNRED}}</button>   <button type="button" class="btn btn-success btn-xs" id="btn_update_editphpini">{{langmod.BTN_UPDATE}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-6">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>{{langmod.PHPELABEL}}</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <p class="m-b-lg">
+                            {{langmod.PHPLABEL4}}
+                        </p>
+                        <textarea id="code1" style="display: none;">{{mod.phpini}}</textarea>
+                        <textarea id="code1hiden" class="codemirror-area" style="display: none;"></textarea>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-success btn-xs" id="addphpiniadv" type="button"><i class="fa fa-check"></i>&nbsp;{{langmod.UPDATEREG}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="wrapper wrapper-content" style="margin-top: 35px">
+        {% include 'footer.html' %}
+    </div>
+</div>

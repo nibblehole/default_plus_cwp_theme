@@ -1,0 +1,184 @@
+{% set mysqlbar=(100/mod.mysqlpack.package)*mod.mysqlpack.used %}
+{% if mysqlbar >=26 and mysqlbar <=50 %}
+{% set classbar = 'progress-bar progress-bar-success' %}
+{% elseif mysqlbar >=51 and mysqlbar <=75 %}
+{% set classbar = 'progress-bar progress-bar-warning' %}
+{% elseif mysqlbar >75 %}
+{% set classbar = 'progress-bar progress-bar-danger' %}
+{% else %}
+{% set classbar = 'progress-bar' %}
+{% endif %}
+
+<div class="row  border-bottom white-bg dashboard-header">
+    {% if mod.fsl == 1 %}
+    {% set stflalert ='block' %}
+    {% else %}
+    {% set stflalert ='none' %}
+    {% endif %}
+    <div class="row  alert alert-warning col-lg-12" style="margin-left: 5px; padding-right: 5px;display:{{stflalert}}" id="alertfl">
+        <strong>{{langene.GALARTFILEBLOCK}}</strong>
+    </div>
+    <div class="col-lg-10">
+        <h2>{{langmod.DTITLE}} ({{users}})</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="?">Home</a></li>
+            <li class="breadcrumb-item active"><strong>{{langmod.DTITLE}}</strong></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <br>
+        <div class="row">
+            <div class="col-lg-9">
+                <div>
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-lg-12 text-right" style="margin-bottom: 10px">
+                                    {% if mysqlbar < 100 %}
+                                    {% set stbtn = 'block' %}
+                                    {% else %}
+                                    {% set stbtn = 'none' %}
+                                    {% endif %}
+                                    {% if (mod.mysqlpack.package>0) %}
+                                        {% if(mod.mysqlpack.used < mod.mysqlpack.package) %}
+                                            <button type="button" class="btn btn-success btn-xs mr5 mb10" data-dismiss="modal" onclick="return modalbtnonlymysql()" id="modal-btn-onlymysql" style="margin-right: 5px">{{langmod.DBBTNCREARDB}}</button><button type="button" class="btn btn-success btn-xs mr5 mb10" id="modal-btn-createbdanduser">{{langmod.DBBTNCREATEBDUSER}}</button>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                                <div class="tabs-container">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li id="litab1" class="active"><a class="nav-link active show" data-toggle="tab" href="#tab-1" id="dbtab1"> {{langmod.DBTITLELIST}}</a></li>
+                                        <li id="litab2"><a class="nav-link" data-toggle="tab" href="#tab-2"  id="dbtab2">{{langmod.DBBTNLISTUSER}}</a></li>
+                                    </ul>
+                                    <div class="tab-content" style="width: 100%;">
+                                        <div role="tabpanel" id="tab-1" class="tab-pane active show" style="width: 100%;">
+                                            <div class="ibox-content" style="width: 100%;">
+                                                <div class="table-responsive" style="width: 100%;">
+                                                    <table class="table table-striped table-bordered table-hover dataTables-example"style="width: 100%;" width="100%" id="DataTables_Table_0">
+                                                        <thead>
+                                                            <tr role="row">
+                                                                <th>{{langmod.DBTITLETABLEDB}}</th>
+                                                                <th>{{langmod.DBTITLETABLEUSER}}</th>
+                                                                <th>{{langmod.DBTITLETABLEACTION}}</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="trtable">
+                                                            {% set item1=1  %}
+                                                            {% for dbuser in mod.bdanduserlist %}
+                                                            <tr id="{{dbuser.database}}" class="gradeA odd" role="row">
+                                                                <td>
+                                                                    <div class="row">
+                                                                        <div class="col-lg-4">
+                                                                             {{dbuser.database}}
+                                                                        </div>
+                                                                        <div class="col-lg-4 text-center">
+                                                                            <a href="#" onclick="return optimizermysql('{{dbuser.database}}')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{{langmod.DBOPTITOP}}"><i data-toggle="tooltip" data-placement="top" title="{{langmod.DBOPTITOP}}"  class="fa fa-tachometer"></i></a>   <a href="#" onclick="return checkmysql('{{dbuser.database}}')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{{langmod.DBCHEKMYSQL}}"><i data-toggle="tooltip" data-placement="top" title="{{langmod.DBCHEKMYSQL}}"   class="fa fa-check-circle"></i></a>  <a href="#" onclick="return repairmysql('{{dbuser.database}}')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{{langmod.DBREPARAIR}}"><i data-toggle="tooltip" data-placement="top" title="{{langmod.DBREPARAIR}}" class="fa fa-wrench"></i></a>   <a href="#" data-toggle="tooltip" onclick="return dumpsql('{{dbuser.database}}')" data-placement="bottom" title="" data-original-title="{{langmod.DBBACKUPDB}}"><i data-toggle="tooltip" data-placement="top" title="{{langmod.DBBACKUPDB}}" class="fa fa-clone"></i></a>
+                                                                        </div>
+                                                                        <div class="col-lg-4 text-right">
+                                                                            <button type="button" class="btn btn-danger btn-xs mr5 mb10" onclick="return deletedatabase(0,'{{dbuser.database}}')"><i class="fa fa-times-circle-o"></i> {{langmod.DBBTNDELETE}}</button>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </td>
+                                                                <td>
+                                                                    {% if dbuser.user !='' %}
+                                                                        {% set userbd = dbuser.user|split(',')%}
+                                                                        {% set hostbd = dbuser.host|split(',') %}
+                                                                        {% set cont =0 %}
+                                                                        {% for usrdb in userbd %}
+                                                                            <div class="row" style="margin-bottom: 3px">
+                                                                                <div class="col-lg-7">
+                                                                                    {{usrdb}}[{{hostbd[cont]}}]
+                                                                                </div>
+                                                                                <div class="col-lg-5 text-right">
+                                                                                    <button type="button" class="btn btn-danger btn-xs mr5 mb10"  onclick="return deleteuserdb(0,'{{dbuser.database}}','{{usrdb}}','{{hostbd[cont]}}')"><i class="fa fa-times-circle-o"></i> {{langmod.DBBTNDELETE}}</button><button type="button" style="margin-left: 5px; margin-top: 3px" class="btn btn-warning btn-xs mr5 mb10"  onclick="return changepassmysqluser(0,'','{{usrdb}}','{{hostbd[cont]}}')"> {{langmod.DBBTNCHANGPASSUSR}}</button>
+                                                                                </div>
+                                                                            </div>
+                                                                            {% set cont=cont+1 %}
+                                                                        {% endfor %}
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td>
+                                                                    <div class="col-lg-12 text-center">
+                                                                        <button type="button" class="btn btn-success btn-xs mr5 mb10" onclick="return newusermysql('{{dbuser.database}}')"> {{langmod.DBBTNADDUSER}}</button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% set item1=item1+1  %}
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div role="tabpanel" id="tab-2" class="tab-pane">
+                                            <div class="ibox-content">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-bordered table-hover dataTables-example" id="DataTables_Table_1">
+                                                        <thead>
+                                                            <tr role="row">
+                                                                <th>#</th>
+                                                                <th>{{langmod.DBTITLETABLEUSER}}</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="trsuser">
+                                                            {% set item=1  %}
+                                                            {% for user in mod.userlist %}
+                                                            <tr>
+                                                                <td>
+                                                                    {{item}}
+                                                                </td>
+                                                                <td>
+                                                                    <div class="row">
+                                                                        <div class="col-md-3">{{user.user}} [ {{user.host}} ]</div>
+                                                                        <div class="col-md-3"><button type="button" class="btn btn-danger btn-xs mr5 mb10"   onclick="return deleteuserdb(0,'','{{user.user}}','{{user.host}}')"><i class=" icomoon-icon-cancel"></i> {{langmod.DBBTNDELETE}}</button><button type="button" class="btn btn-warning btn-xs mr5 mb10" style="margin-left: 5px"  onclick="return changepassmysqluser(0,'','{{user.user}}','{{user.host}}')"> {{langmod.DBBTNCHANGPASSUSR}}</button></div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% set item=item+1 %}
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="slimScrollBar ui-draggable" style="background: rgb(243, 243, 243); height: 5px; position: absolute; bottom: 3px; opacity: 0.4; display: none; border-radius: 5px; z-index: 99; width: 742px; left: 0px;"></div>
+                                                    <div class="slimScrollRail" style="width: 100%; height: 5px; position: absolute; bottom: 3px; display: none; border-radius: 5px; background: rgb(51, 51, 51); opacity: 0.3; z-index: 90;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="stat-list">
+                                <li id="indmysql">
+                                    <h2 class="no-margins" id="tlmysqlind">{{langene.PGMYSQL}} {{mod.mysqlpack.used}} / {{mod.mysqlpack.package}}</h2>
+                                    <small>{{langmod.DBLABEL1}} / {{langmod.DBLABEL2}}</small>
+                                    <div class="stat-percent">{{mysqlbar|round}}%</div>
+                                    <div class="progress progress-mini">
+                                        <div id="barmysqlind" style="width: {{mysqlbar}}%;" class="{{classbar}}"></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content" style="margin-top: 35px">
+        {% include 'footer.html' %}
+    </div>
+</div>
+<style>
+    .dataTables_wrapper div.row{
+        width: 100%;
+    }
+</style>

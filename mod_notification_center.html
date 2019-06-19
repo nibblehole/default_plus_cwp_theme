@@ -1,0 +1,185 @@
+{% if mod.ncmod.actnoti == 1 %} {% set actnoti='checked' %}{% else %}{% set actnoti='' %}{% endif %}
+{% if mod.ncmod.notiemail == 1 %} {% set notiemail='checked' %} {% set emailaccountst='block' %} {% else %} {% set notiemail='' %}{% set emailaccountst='none' %} {% endif %}
+{% if mod.ncmod.notiview == 1 %} {% set notiview='checked' %}{% else %} {% set notiview='' %} {% endif %}
+{% if mod.ncmod.userdisk == 1 %} {% set userdisk='checked' %}{% else %}{% set userdisk='' %} {% endif %}
+{% if mod.ncmod.serverst == 1 %} {% set serverst='checked' %}{% else %}{% set serverst='' %} {% endif %}
+{% if mod.ncmod.quota == 1 %} {% set quota='checked' %}{% else %}{% set quota='' %} {% endif %}
+{% if mod.ncmod.dectwebchang == 1 %} {% set dectwebchang='checked' %}{% else %}{% set dectwebchang='' %} {% endif %}
+{% if mod.ncmod.quotaemail == 1 %} {% set quotaemail='checked' %}{% else %}{% set quotaemail='' %} {% endif %}
+{% set emailaccount=mod.ncmod.emailaccount %}
+<div class="row  border-bottom white-bg dashboard-header">
+    {% if mod.fsl == 1 %}
+        {% set stflalert ='block' %}
+    {% else %}
+        {% set stflalert ='none' %}
+    {% endif %}
+    <div class="row  alert alert-warning col-lg-12" style="margin-left: 5px; padding-right: 5px;display:{{stflalert}}" id="alertfl">
+        <strong>{{langene.GALARTFILEBLOCK}}</strong>
+    </div>
+
+    <div class="col-lg-10">
+        <h2>{{langmod.NCTITLE}} ({{users}})</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="?">Home</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>{{langmod.NCTITLE}}</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <br>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label class="col-lg-12 control-label">{{langmod.NCACTIVETITLE}}</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="switch">
+                                            <div class="onoffswitch">
+                                                <input type="checkbox" {{actnoti}} class="onoffswitch-checkbox" id="actnoti" name="actnoti" onclick="return changestnot('actnoti')">
+                                                <label class="onoffswitch-label" for="actnoti">
+                                                    <span class="onoffswitch-inner"></span>
+                                                    <span class="onoffswitch-switch"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-lg-12">
+                                    <div class="ibox ">
+                                        <div class="ibox-content">
+
+                                            <table class="table" border="0">
+                                                <tbody>
+                                                <tr>
+                                                    <td class="per50">
+                                                        <div class="row">
+                                                            <div class="col-lg-6">{{langmod.NCQUOTA}}</div>
+                                                            <div class="col-lg-4">
+                                                                <div class="switch">
+                                                                    <div class="onoffswitch">
+                                                                        <input type="checkbox" class="onoffswitch-checkbox" name="quota" id="quota" {{quota}} onclick="return changestnot('quota')">
+                                                                        <label class="onoffswitch-label" for="quota">
+                                                                            <span class="onoffswitch-inner"></span>
+                                                                            <span class="onoffswitch-switch"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6">{{langmod.NCDETCT}}</div>
+                                                            <div class="col-lg-4">
+                                                                <div class="switch">
+                                                                    <div class="onoffswitch">
+                                                                        <input type="checkbox" {{dectwebchang}} class="onoffswitch-checkbox" id="dectwebchang" name="dectwebchang" onclick="return changestnot('dectwebchang')" >
+                                                                        <label class="onoffswitch-label" for="dectwebchang">
+                                                                            <span class="onoffswitch-inner"></span>
+                                                                            <span class="onoffswitch-switch"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6">{{langmod.NCQUOTEMAIL}}</div>
+                                                            <div class="col-lg-4">
+                                                                <div class="switch">
+                                                                    <div class="onoffswitch">
+                                                                        <input type="checkbox" {{quotaemail}} class="onoffswitch-checkbox" id="quotaemail" name="quotaemail" onclick="return changestnot('quotaemail')">
+                                                                        <label class="onoffswitch-label" for="quotaemail">
+                                                                            <span class="onoffswitch-inner"></span>
+                                                                            <span class="onoffswitch-switch"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="per50">
+                                                        <div class="row">
+                                                            <div class="col-lg-4">{{langmod.NCEMAIL}}</div>
+                                                            <div class="col-lg-4">
+                                                                <div class="switch">
+                                                                    <div class="onoffswitch">
+                                                                        <input type="checkbox" {{notiemail}} class="onoffswitch-checkbox" id="notiemail" name="notiemail" onclick="return changestnot('notiemail')">
+                                                                        <label class="onoffswitch-label" for="notiemail">
+                                                                            <span class="onoffswitch-inner"></span>
+                                                                            <span class="onoffswitch-switch"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-lg-4">{{langmod.NCACCEMAIL}}</div>
+                                                            <div class="col-lg-6">
+                                                                <div class="toggle-custom">
+                                                                    <input type="text" id="emailaccount" class="form-control" placeholder="{{langmod.NCHOLPEMAIL}}" value="{{emailaccount}}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" style="margin-top: 5px">
+                                                            <div class="col-lg-4">{{langmod.NCVISUAL}}</div>
+                                                            <div class="col-lg-4">
+                                                                <div class="switch">
+                                                                    <div class="onoffswitch">
+                                                                        <input type="checkbox" {{notiview}} class="onoffswitch-checkbox" id="notiview" onclick="return changestnot('notiview')">
+                                                                        <label class="onoffswitch-label" for="notiview">
+                                                                            <span class="onoffswitch-inner"></span>
+                                                                            <span class="onoffswitch-switch"></span>
+                                                                        </label>
+                                                                        <input type="hidden" id="notiview-h" value="">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="pull-right col-lg-offset-8 toggle-inline">
+                                                <button class="btn btn-success btn-xs" id="btnsavenoti">{{langmod.NCSAVE}}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <div class="jumbotron">
+                            <h1>{{langmod.NCLABEL1}}</h1>
+                            <p style="margin-top: 20px"><strong>{{langmod.NCLABEL1}}</strong>: {{langmod.NCLABEL2}}</p>
+                            <p><strong>{{langmod.NCLABEL3}}</strong>: {{langmod.NCLABEL4}}</p>
+                            <p><strong>{{langmod.NCLABEL5}}</strong>: {{langmod.NCLABEL6}}</p>
+                            <p><strong>{{langmod.NCLABEL7}}</strong>: {{langmod.NCLABEL8}}</p>
+                            <p><strong>{{langmod.NCLABEL9}}</strong>: {{langmod.NCLABEL10}}</p>
+                            <p><strong>{{langmod.NCLABEL11}}</strong>: {{langmod.NCLABEL12}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content" style="margin-top: 35px">
+        {% include 'footer.html' %}
+    </div>
+</div>
