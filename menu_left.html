@@ -5,21 +5,6 @@
             <a href="?">
             <img alt="" src="{{url}}/img/cwp_logo.png" width="200" style="margin-right: 15px"/></a>
         </span>
-        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-            <span class="clear"> 
-                <span class="block m-t-xs"> <strong class="font-bold"><i class="fa fa-user-o" aria-hidden="true"></i> {{users}}</strong>
-            </span> 
-            <span class="text-muted text-xs block">{{langene.MOD_TITTLE_SETTING}} <b class="caret"></b></span> </span> 
-        </a>
-        <ul class="dropdown-menu animated fadeInRight m-t-xs">
-            <li><a href="#" data-toggle="modal"  data-target="#modal-changepass">{{langene.CHANGEPASS}}</a></li>
-            <li><a href="#" data-toggle="modal"  data-target="#modal-settings">{{langene.GNLABLE10}}</a></li>
-            <li class="divider"></li>
-            <li><a href="#" class="logon">{{langene.BTN_LOGOUT}}</a></li>
-        </ul>
-    </div>
-    <div class="logo-element">
-        CWP
     </div>
 </li>
 
@@ -254,6 +239,25 @@
 
 {% endif %}
 
+<!------------------------> 
+<!--  USER MENU       -->
+<!------------------------>
+
+<li class="searchmenu">
+
+    <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">User {{users}} </span><span class="fa arrow"></span></a>
+
+    <ul class="nav nav-second-level collapse">
+
+        <li class="search"><a href="#" data-toggle="modal"  data-target="#modal-changepass">{{langene.CHANGEPASS}}</a></li>
+        <li class="search"><a href="#" data-toggle="modal"  data-target="#modal-settings">{{langene.GNLABLE10}}</a></li>
+        <li class="search"><a  href="#" class="logon">{{langene.BTN_LOGOUT}}</a></li>
+
+    </ul>
+
+</li>
+
+{% endif %}
 
 <li  class="active2 menugrande">
     <a href="#" ><i class="fa fa-tasks"></i> <span class="nav-label">{{langene.USERDD}}</span></a>
