@@ -22,26 +22,40 @@
 <!--  SETTOINGS         -->
 <!------------------------>
 {% if ("crontab" in rmenu )or("change_password" in rmenu )or("process_list" in rmenu )or("phpini_editor" in rmenu )or(menu.cloudlinux ==1 )or(menu.notification_center ==1 )or(menu.cloudlinux ==1 )or(swmenu==1) %}
-<li class="searchmenu">
-    <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">{{langene.CWPSETTING}}</span><span class="fa arrow"></span></a>
-    <ul class="nav nav-second-level collapse">
-        {% if ("crontab" in rmenu )or(swmenu==1) %}
-        <li class="search"><a href="?module=crontab">{{langene.CRON}}</a></li>
+
+    {% if mod.name =='crontab' or mod.name =='phpini_editor' or mod.name =='php_selector' or mod.name =='notification_center' %}
+        <li class="searchmenu active">
+    {% else %}
+        <li class="searchmenu">
+    {% endif %}
+
+        <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">{{langene.CWPSETTING}}</span><span class="fa arrow"></span></a>
+
+        {% if mod.name =='crontab' or mod.name =='phpini_editor' or mod.name =='php_selector' or mod.name =='notification_center' %}
+            <ul class="nav nav-second-level collapse in">
+        {% else %}
+            <ul class="nav nav-second-level collapse">
         {% endif %}
-        {% if ("process_list" in rmenu )or(swmenu==1) %}
-        <li class="search"><a href="#"data-toggle="modal" data-target="#modalprocesslist"  class="mod_process_list">{{langene.PROCESSLIST}}</a></li>
-        {% endif %}
-        {% if ("phpini_editor" in rmenu )or(swmenu==1) %}
-        <li class="search" id="phpiniid"><a href="?module=phpini_editor">{{langene.PHPINI}}</a></li>
-        {% endif %}
-        {% if menu.cloudlinux ==1 %}
-        <li class="search"><a href="?module=php_selector">{{langene.PHPSELECTOR}}</a></li>
-        {% endif %}
-        {% if ("notification_center" in rmenu )or(swmenu==1) %}
-        <li class="search"><a href="?module=notification_center">{{langene.BTNOTITITLE}}</a></li>
-        {% endif %}
-    </ul>
-</li>
+
+            {% if ("crontab" in rmenu )or(swmenu==1) %}
+            <li class="search"><a href="?module=crontab">{{langene.CRON}}</a></li>
+            {% endif %}
+            {% if ("process_list" in rmenu )or(swmenu==1) %}
+            <li class="search"><a href="#"data-toggle="modal" data-target="#modalprocesslist"  class="mod_process_list">{{langene.PROCESSLIST}}</a></li>
+            {% endif %}
+            {% if ("phpini_editor" in rmenu )or(swmenu==1) %}
+            <li class="search" id="phpiniid"><a href="?module=phpini_editor">{{langene.PHPINI}}</a></li>
+            {% endif %}
+            {% if menu.cloudlinux ==1 %}
+            <li class="search"><a href="?module=php_selector">{{langene.PHPSELECTOR}}</a></li>
+            {% endif %}
+            {% if ("notification_center" in rmenu )or(swmenu==1) %}
+            <li class="search"><a href="?module=notification_center">{{langene.BTNOTITITLE}}</a></li>
+            {% endif %}
+
+        </ul>
+
+    </li>
 {% endif %}
 
 
@@ -50,7 +64,7 @@
 <!------------------------>
 {% if ("files_system_lock" in rmenu )or("clam" in rmenu )or("fileManager2" in rmenu )or("ftp_accounts" in rmenu )or("backups" in rmenu )or ("protected_directory" in rmenu )or(swmenu==1) %}
 
-    {% if mod.name =='files_system_lock' or mod.name =='clam' or mod.name =='ftp_accounts' or mod.name =='backups' or mod.name =='protected_directory' %}
+    {% if mod.name =='ftp_accounts' or mod.name =='backups' or mod.name =='protected_directory' %}
         <li class="searchmenu active">
     {% else %}
         <li class="searchmenu">
@@ -58,7 +72,7 @@
 
         <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">{{langene.FILEM}}</span><span class="fa arrow"></span></a>
 
-        {% if mod.name =='files_system_lock' or mod.name =='clam' or mod.name =='ftp_accounts' or mod.name =='backups' or mod.name =='protected_directory' %}
+        {% if mod.name =='ftp_accounts' or mod.name =='backups' or mod.name =='protected_directory' %}
             <ul class="nav nav-second-level collapse in">
         {% else %}
             <ul class="nav nav-second-level collapse">
