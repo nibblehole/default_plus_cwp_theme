@@ -8,7 +8,7 @@
     </div>
 </li>
 
-{% if mod.name =='dashboard' %}
+{% if mod.name =='Dashboard' %}
     <li class="active">
         <a href="?"><i class="fa fa-th-large"></i> <span class="nav-label">{{langene.TITLE}}</span></a>
     </li>
@@ -232,15 +232,29 @@
 <!------------------------>
 {% if ("addons" in rmenu )or(swmenu==1) %}
 
-    <li class="searchmenu">
+
+    {% if mod.name =='addons' %}
+        <li class="searchmenu active">
+    {% else %}
+        <li class="searchmenu">
+    {% endif %}
+
         <a href="#"><i class="fa fa-bank"></i> <span class="nav-label">{{langene.ADDONS}}</span><span class="fa arrow"></span></a>
-        <ul class="nav nav-second-level collapse">
+
+        {% if mod.name =='addons' %}
+            <ul class="nav nav-second-level collapse in">
+        {% else %}
+            <ul class="nav nav-second-level collapse">
+        {% endif %}
+
             <li class="search"><a href="?module=addons&acc=filemanager">{{langene.ASSMOD_EXPLO}}</a></li>
             <li class="search"><a href="?module=addons&acc=wordpress">{{langene.ASSMOD_WP}}</a></li>
             <li class="search"><a href="?module=addons&acc=prestashop">{{langene.ASSMOD_PS}}</a></li>
             <li class="search"><a href="?module=addons&acc=joomla">{{langene.ASSMOD_JL}}</a></li>
             <li class="search"><a href="?module=addons&acc=drupal">{{langene.ASSMOD_DP}}</a></li>
+
         </ul>
+
     </li>
 
 {% endif %}
