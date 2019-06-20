@@ -33,16 +33,34 @@
 
                 </div>
                 <div class="col-lg-2">
-                    <canvas id="doughnutChart2" width="80" height="80" style="margin: 18px auto 0"></canvas>
-                    {% set mysqlbar=(100/mod.mysqlpack.package)*mod.mysqlpack.used %}
+                    <canvas id="mysqlChart" width="80" height="80" style="margin: 18px auto 0"></canvas>
+                    <script>
+                    
+                        var mysqlChart = document.getElementById("mysqlChart").getContext("2d");
+                        var doughnutChart1 = new Chart(mysqlChart, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ["{{langene.DSWLABEL2}}","{{langene.DSWLABLE1}}" ],
+                                datasets: [{
+                                    data: [{{mod.mysqlpack.used}}, {{mod.mysqlpack.package - mod.mysqlpack.used}}],
+                                    backgroundColor: ["#a3e1d4","#dedede"]
+                                }]
+                            },
+                            responsive: false,
+                            legend: {
+                                display: false
+                            }
+                        });
+
+                    </script>
                     <h5 >{{langene.PGMYSQL}} {{mod.mysqlpack.used}} / {{mod.mysqlpack.package}}</h5>
                 </div>
                 <div class="col-lg-2">
-                    <canvas id="doughnutChart" width="80" height="80" style="margin: 18px auto 0"></canvas>
+                    <!--<canvas id="doughnutChart" width="80" height="80" style="margin: 18px auto 0"></canvas>-->
                     <h5 >{{langene.PGEMAIL}} {{mod.email_accounts}} / {{mod.email_pack}}</h5>
                 </div>
                 <div class="col-lg-2">
-                    <canvas id="doughnutChart3" width="80" height="80" style="margin: 18px auto 0"></canvas>
+                    <!--<canvas id="doughnutChart3" width="80" height="80" style="margin: 18px auto 0"></canvas>-->
                     <h5 >{{langene.PGDOMAINS}} {{mod.domain_accounts}}/{{mod.domain_pack}}</h5>
                 </div>
                 <div class="col-lg-2">

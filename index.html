@@ -254,26 +254,38 @@
 
     <script src="{{url}}/js/plugins/dataTables/datatables.min.js"></script>
 
+    <script src="{{url}}/js/chart.bundle.min.js"></script>
+
+    <!-- chart js -->
+
     {% if mod.name =='phpini_editor' %}
+
         <script src="{{url}}/js/plugins/typehead/bootstrap3-typeahead.min.js"></script>
         <script src="{{url}}/js/plugins/codemirror/codemirror.js"></script>
         <script src="{{url}}/js/plugins/codemirror/mode/javascript/javascript.js"></script>
-    {% endif %}
-    {% if mod.name =='mail_autoreply' %}
-    <script src="{{url}}/js/plugins/datapicker/bootstrap-datepicker.js"></script>
-    <script src="{{url}}/js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
-    <script src="{{url}}/js/plugins/clockpicker/clockpicker.js"></script>
-    <script src="{{url}}/js/plugins/daterangepicker/daterangepicker.js"></script>
-    <script src="{{url}}/js/plugins/iCheck/icheck.min.js"></script>
-    {% endif %}
-    {% if mod.name =='backups' %}
-    <script src="{{url}}/js/plugins/flot/jquery.flot.js"></script>
-    <script src="{{url}}/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
-    <script src="{{url}}/js/plugins/flot/jquery.flot.resize.js"></script>
-    <script src="{{url}}/js/plugins/flot/jquery.flot.pie.js"></script>
-    <script src="{{url}}/js/plugins/flot/jquery.flot.time.js"></script>
 
     {% endif %}
+
+    {% if mod.name =='mail_autoreply' %}
+    
+        <script src="{{url}}/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+        <script src="{{url}}/js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+        <script src="{{url}}/js/plugins/clockpicker/clockpicker.js"></script>
+        <script src="{{url}}/js/plugins/daterangepicker/daterangepicker.js"></script>
+        <script src="{{url}}/js/plugins/iCheck/icheck.min.js"></script>
+
+    {% endif %}
+
+    {% if mod.name =='backups' %}
+
+        <script src="{{url}}/js/plugins/flot/jquery.flot.js"></script>
+        <script src="{{url}}/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+        <script src="{{url}}/js/plugins/flot/jquery.flot.resize.js"></script>
+        <script src="{{url}}/js/plugins/flot/jquery.flot.pie.js"></script>
+        <script src="{{url}}/js/plugins/flot/jquery.flot.time.js"></script>
+
+    {% endif %}
+
     <script>
         $(document).ready(function() {
             {% if mod.name !='Dashboard' %}
@@ -342,6 +354,24 @@
                             display: false
                         }
                     };
+
+
+                    var mysqlg = document.getElementById("doughnutChart2").getContext("2d");
+                    var doughnutChart2 = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ["{{langene.DSWLABEL2}}","{{langene.DSWLABLE1}}" ],
+                            datasets: [{
+                                data: [{{mod.mysqlpack.used}}, {{mod.mysqlpack.package - mod.mysqlpack.used}}],
+                                backgroundColor: ["#a3e1d4","#dedede"]
+                            }]
+                        },
+                        responsive: false,
+                        legend: {
+                            display: false
+                        }
+                    });
+
                     var emailg = document.getElementById("doughnutChart").getContext("2d");
                     new Chart(emailg, {type: 'doughnut', data: doughnutData, options:doughnutOptions});
 
@@ -356,8 +386,10 @@
                             backgroundColor: ["#a3e1d4","#dedede"]
                         }]
                     } ;
-                    var mysqlg = document.getElementById("doughnutChart2").getContext("2d");
-                    new Chart(mysqlg, {type: 'doughnut', data: doughnutData2, options:doughnutOptions});
+
+
+                    //var mysqlg = document.getElementById("doughnutChart2").getContext("2d");
+                    //new Chart(mysqlg, {type: 'doughnut', data: doughnutData2, options:doughnutOptions});
 
                     var dga={{mod.domain_accounts}};
                     var dgb={{mod.domain_pack}};
