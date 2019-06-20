@@ -1092,7 +1092,7 @@ ul.nav-second-level {
   padding: 0;
   width: 100%;
   align-items: inherit;
-  background-color: #1ab394;
+  background-color: #5ab6a3;
 }
 .navbar-static-top .dropdown-menu {
   right: 0;
@@ -9583,4 +9583,18 @@ body.md-skin {
     text-align: center;
     list-style: none;
     margin-top: 30px!important;
+}
+
+
+#dashboardMenu .ibox-content > .row a {
+  display: flex;
+  align-items: center;
+}
+
+#dashboardMenu .ibox-content > .row a > span {
+  margin-left: 10px;
+}
+
+#dashboardMenu .ibox-content > .row a > i {
+  width: 60px;
 }
