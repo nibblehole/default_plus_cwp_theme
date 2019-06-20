@@ -1,4 +1,5 @@
 <div class="row  border-bottom white-bg dashboard-header">
+    
     <div class="col-md-3">
         <h4>
             {{langene.GNLABLE7}}
@@ -14,15 +15,10 @@
             {% endfor %}
         </ul>
     </div>
-    <!--div class="col-md-5">
-        <h4>
-            {{langene.GNLABLE8}}  {{mod.domain_username}}
-        </h4>
-        <div class="flot-chart dashboard-chart">
-            <div class="flot-chart-content" id="flot-dashboard-chart"></div>
-        </div>
 
-    </div-->
+    <!-- chart js -->
+    <script src="{{url}}/js/chart.bundle.min.js"></script>
+
     <div class="col-md-7">
         <h4>
             {{langene.GNLABLE9}}
@@ -33,24 +29,123 @@
 
                 </div>
                 <div class="col-lg-2">
-                    <canvas id="doughnutChart2" width="80" height="80" style="margin: 18px auto 0"></canvas>
-                    {% set mysqlbar=(100/mod.mysqlpack.package)*mod.mysqlpack.used %}
+                    <canvas id="mysqlChart" width="80" height="80" style="margin: 0px auto 0"></canvas>
+                    <script>
+                    
+                        var mysqlChart = document.getElementById("mysqlChart").getContext("2d");
+                        var doughnutChart1 = new Chart(mysqlChart, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ["{{langene.DSWLABEL2}}","{{langene.DSWLABLE1}}" ],
+                                datasets: [{
+                                    data: [{{mod.mysqlpack.used}}, {{mod.mysqlpack.package - mod.mysqlpack.used}}],
+                                    backgroundColor: ["#a3e1d4","#dedede"]
+                                }]
+                            },
+                            options: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        });
+
+                    </script>
                     <h5 >{{langene.PGMYSQL}} {{mod.mysqlpack.used}} / {{mod.mysqlpack.package}}</h5>
                 </div>
                 <div class="col-lg-2">
-                    <canvas id="doughnutChart" width="80" height="80" style="margin: 18px auto 0"></canvas>
+                    <canvas id="emailChart" width="80" height="80" style="margin: 0px auto 0"></canvas>
+                    <script>
+                    
+                        var emailChart = document.getElementById("emailChart").getContext("2d");
+                        var doughnutChart2 = new Chart(emailChart, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ["{{langene.DSWLABEL2}}","{{langene.DSWLABLE1}}" ],
+                                datasets: [{
+                                    data: [{{mod.email_accounts}}, {{mod.email_pack - mod.email_accounts}}],
+                                    backgroundColor: ["#a3e1d4","#dedede"]
+                                }]
+                            },
+                            options: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        });
+
+                    </script>
                     <h5 >{{langene.PGEMAIL}} {{mod.email_accounts}} / {{mod.email_pack}}</h5>
                 </div>
                 <div class="col-lg-2">
-                    <canvas id="doughnutChart3" width="80" height="80" style="margin: 18px auto 0"></canvas>
+                    <canvas id="domainChart" width="80" height="80" style="margin: 0px auto 0"></canvas>
+                    <script>
+                    
+                        var domainChart = document.getElementById("domainChart").getContext("2d");
+                        var doughnutChart3 = new Chart(domainChart, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ["{{langene.DSWLABEL2}}","{{langene.DSWLABLE1}}" ],
+                                datasets: [{
+                                    data: [{{mod.domain_accounts}}, {{mod.domain_pack - mod.domain_accounts}}],
+                                    backgroundColor: ["#a3e1d4","#dedede"]
+                                }]
+                            },
+                            options: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        });
+
+                    </script>
                     <h5 >{{langene.PGDOMAINS}} {{mod.domain_accounts}}/{{mod.domain_pack}}</h5>
                 </div>
                 <div class="col-lg-2">
-                    <canvas id="doughnutChart5" width="80" height="80" style="margin: 18px auto 0"></canvas>
+                    <canvas id="subDomainChart" width="80" height="80" style="margin: 0px auto 0"></canvas>
+                    <script>
+                    
+                        var subDomainChart = document.getElementById("subDomainChart").getContext("2d");
+                        var doughnutChart4 = new Chart(subDomainChart, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ["{{langene.DSWLABEL2}}","{{langene.DSWLABLE1}}" ],
+                                datasets: [{
+                                    data: [{{mod.subdomain_accounts}}, {{mod.subdomain_pack - mod.subdomain_accounts}}],
+                                    backgroundColor: ["#a3e1d4","#dedede"]
+                                }]
+                            },
+                            options: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        });
+
+                    </script>
                     <h5 >{{langene.PGSUBDOMAIN}} {{mod.subdomain_accounts}}/{{mod.subdomain_pack}}</h5>
                 </div>
                 <div class="col-lg-2">
-                    <canvas id="doughnutChart4" width="80" height="80" style="margin: 18px auto 0"></canvas>
+                    <canvas id="ftpChart" width="80" height="80" style="margin: 0px auto 0"></canvas>
+                    <script>
+                    
+                        var ftpChart = document.getElementById("ftpChart").getContext("2d");
+                        var doughnutChart5 = new Chart(ftpChart, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ["{{langene.DSWLABEL2}}","{{langene.DSWLABLE1}}" ],
+                                datasets: [{
+                                    data: [{{mod.ftp_accounts}}, {{mod.ftp_pack - mod.ftp_accounts}}],
+                                    backgroundColor: ["#a3e1d4","#dedede"]
+                                }]
+                            },
+                            options: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        });
+
+                    </script>
                     <h5 >{{langene.PGFTP}} {{mod.ftp_accounts}} / {{mod.ftp_pack}}</h5>
                 </div>
                 <div class="col-lg-1">
@@ -60,7 +155,9 @@
         </div>
 
     </div>
+
     <div class="col-md-2">
+
         <div style="margin-top: 15px">
             <h3>{{langmod.GNLABEL21}}:
                 <small><br>{{settings.timerdate}}<br></small>
@@ -83,7 +180,9 @@
         </div>
 
    </div>
+
 </div>
+
 <div class="row">
     <div class="col-lg-12">
         <div class="wrapper wrapper-content">
